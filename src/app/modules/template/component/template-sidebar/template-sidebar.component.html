@@ -1,0 +1,25 @@
+<div class="nav menu-container">
+    <div class="sb-sidenav-menu-heading" style="color: white;">Core</div>
+    <a class="nav-link" href="#" style="color: white;">
+        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+        Pagina principal
+    </a>
+    <div class="sb-sidenav-menu-heading" style="color: white;">Interface</div>
+    <div *ngFor="let d of menu">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#' + d.target"
+
+            aria-expanded="false" aria-controls="collapseLayouts" style="color: white;">
+            <div class="sb-nav-link-icon"><i class="{{d.icon}}"></i></div>
+            {{d.name}}
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div *ngFor="let x of d.subMenu" class="collapse" id="{{d.target}}" aria-labelledby="headingOne"
+            data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" [routerLink]="[x.url]" style="color: white;"> <i class="{{x.icon}}"></i> &nbsp; {{x.name}} 
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cerrarModal(false)">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="myForm">
+        <div class="col-12 mt-3">
+            <div class="form-group">
+                <label for="">Nombre</label>
+                <input formControlName="nombre" type="text" class="form-control" placeholder="Ingrese el nombre del Producto">
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <div class="form-group">
+                <label for="">Tipo</label>
+                <input formControlName="tipo" type="text" class="form-control" placeholder="Ingrese el tipo de Producto">
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <div class="form-group">
+                <label for="">Descripción</label>
+                <input formControlName="descripcion" type="text" class="form-control" placeholder="Ingrese la descripción del cultivo">
+            </div>
+        </div>
+        <div class="col-6 mt-3">
+            <div class="d-grid gap-2">
+                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
+            </div>
+        </div>
+        <div class="col-6 mt-3">
+            <div class="d-grid gap-2">
+                <button (click)="cerrarModal(false)" class="btn-block btn btn-danger btn-sm">CANCELAR</button>
+            </div>
+        </div>
+    </form>
+</div>

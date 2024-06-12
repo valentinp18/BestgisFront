@@ -1,0 +1,59 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  z-index: -1; /* Asegura que esté detrás del contenido */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Divide la pantalla en dos columnas */
+  gap: 20px; /* Espacio entre las columnas */
+}
+
+.image-container {
+  text-align: center; /* Para centrar la imagen */
+  grid-column: 1; /* Ajustar a la primera columna */
+  margin-right: 20px; /* Añadir espacio a la derecha */
+}
+
+.image-container img {
+  width: 75%; /* Haz que la imagen sea un poco más grande */
+  max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 2; /* Ajustar a la segunda columna */
+  margin-left: 250px; /* Añadir espacio a la izquierda */
+}
+
+.movimiento {
+  animation: moverImagen 1s ease infinite alternate; /* Haz que la animación sea más rápida */
+}
+
+@keyframes moverImagen {
+  0% {
+      transform: translateY(-30px); /* Posición inicial de la imagen */
+  }
+  100% {
+      transform: translateY(20px); /* Movimiento hacia abajo */
+  }
+}

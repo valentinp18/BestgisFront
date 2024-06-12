@@ -1,0 +1,168 @@
+<div class="modal-body">
+    <div class="container">
+    <h1 class="modal-title text-center">REGISTRAR INFORME</h1>
+</div>
+
+ <!-- Campo para cliemte -->
+ <div class="modal-body">
+    <div class="container">
+    <form [formGroup]="myForm">
+        <div formGroupName="cliente">
+            <H2>Registrar cliente</H2>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="nombres">Nombres</label>
+                    <input formControlName="nombres" type="text" class="form-control" id="nombres" placeholder="Ingrese los nombres del cliente">
+                    <div *ngIf="myForm.get('cliente.nombres')?.errors && myForm.get('cliente.nombres')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('cliente.nombres')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="apellidos">Apellidos</label>
+                    <input formControlName="apellidos" type="text" class="form-control" id="apellidos" placeholder="Ingrese los apellidos del cliente">
+                    <div *ngIf="myForm.get('cliente.apellidos')?.errors && myForm.get('cliente.apellidos')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('cliente.apellidos')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="dni">DNI</label>
+                    <input formControlName="dni" type="text" class="form-control" id="dni" placeholder="Ingrese el DNI del cliente">
+                    <div *ngIf="myForm.get('cliente.dni')?.errors && myForm.get('cliente.dni')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('cliente.dni')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input formControlName="telefono" type="text" class="form-control" id="telefono" placeholder="Ingrese el teléfono del cliente">
+                    <div *ngIf="myForm.get('cliente.telefono')?.errors && myForm.get('cliente.telefono')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('cliente.telefono')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo para ubicacion -->
+        <div formGroupName="ubicacion">
+            <H2>Registrar ubicacion</H2>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre de la ubicación">
+                    <div *ngIf="myForm.get('ubicacion.nombre')?.errors && myForm.get('ubicacion.nombre')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('ubicacion.nombre')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="gps">GPS</label>
+                    <input formControlName="gps" type="text" class="form-control" id="gps" placeholder="Ingrese las coordenadas GPS">
+                    <div *ngIf="myForm.get('ubicacion.gps')?.errors && myForm.get('ubicacion.gps')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('ubicacion.gps')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="form-group">
+                    <label for="observacion">Observación</label>
+                    <input formControlName="observacion" type="text" class="form-control" id="observacion" placeholder="Ingrese alguna observación">
+                    <div *ngIf="myForm.get('ubicacion.observacion')?.errors && myForm.get('ubicacion.observacion')?.touched">
+                        <small class="text-danger" *ngIf="myForm.get('ubicacion.observacion')?.hasError('required')">Campo requerido</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo para seleccionar drone -->
+        <div class="col-12 mt-3">
+            <H2>Registrar drone</H2>
+            <div class="form-group">
+                <label for="drone">Seleccionar Drone</label>
+                <select formControlName="drone" class="form-control" id="drone">
+                    <option value="" disabled selected>-- Seleccionar un drone --</option>
+                    <option *ngFor="let drone of drones" [ngValue]="drone">{{ drone.modelo }}</option>
+                </select>
+                <div *ngIf="myForm.get('drone')?.errors && myForm.get('drone')?.touched">
+                    <small class="text-danger" *ngIf="myForm.get('drone')?.hasError('required')">Selecciona un drone</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo para seleccionar clima -->
+        <div class="col-12 mt-3">
+            <H2>Registrar clima</H2>
+            <div class="form-group">
+                <label for="clima">Seleccionar Clima</label>
+                <select formControlName="clima" class="form-control" id="clima">
+                    <option value="" disabled selected>-- Seleccionar un clima --</option>
+                    <option *ngFor="let clima of climas" [ngValue]="clima">{{ clima.estado }}</option>
+                </select>
+                <div *ngIf="myForm.get('clima')?.errors && myForm.get('clima')?.touched">
+                    <small class="text-danger" *ngIf="myForm.get('clima')?.hasError('required')">Selecciona un clima</small>
+                </div>
+            </div>
+        </div>
+
+         <!-- Campo para seleccionar cultivo -->
+         <div class="col-12 mt-3">
+            <H2>Registrar cultivo</H2>
+            <div class="form-group">
+                <label for="cultivo">Seleccionar Cultivo</label>
+                <select formControlName="cultivo" class="form-control" id="clutivo">
+                    <option value="" disabled selected>-- Seleccionar un cultivo--</option>
+                    <option *ngFor="let cultivo of cultivos" [ngValue]="cultivo">{{ cultivo.nombre }}</option>
+                </select>
+                <div *ngIf="myForm.get('cultivo')?.errors && myForm.get('cultivo')?.touched">
+                    <small class="text-danger" *ngIf="myForm.get('cultivo')?.hasError('required')">Selecciona un cultivo</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo para seleccionar producto -->
+        <div class="col-12 mt-3">
+            <H2>Registrar producto</H2>
+            <div class="form-group">
+                <label for="producto">Seleccionar Producto</label>
+                <select formControlName="producto" class="form-control" id="producto">
+                    <option value="" disabled selected>-- Seleccionar un producto--</option>
+                    <option *ngFor="let producto of productos" [ngValue]="producto">{{ producto.nombre }}</option>
+                </select>
+                <div *ngIf="myForm.get('producto')?.errors && myForm.get('producto')?.touched">
+                    <small class="text-danger" *ngIf="myForm.get('producto')?.hasError('required')">Selecciona un producto</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo para seleccionar campo agricola -->
+        <div class="col-12 mt-3">
+            <H2>Registrar campo agricola</H2>
+            <div class="form-group">
+                <label for="campo">Seleccionar campo agricola</label>
+                <select formControlName="campo" class="form-control" id="campo">
+                    <option value="" disabled selected>-- Seleccionar un campo agricola--</option>
+                    <option *ngFor="let campo of campoAgricolas" [ngValue]="campo">{{ campo.tipoTierra }}</option>
+                </select>
+                <div *ngIf="myForm.get('campo')?.errors && myForm.get('campo')?.touched">
+                    <small class="text-danger" *ngIf="myForm.get('campo')?.hasError('required')">Selecciona un campo agricola</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 mt-3">
+            <div class="d-grid gap-2">
+                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
+            </div>
+        </div>
+        <div class="col-6 mt-3">
+            <div class="d-grid gap-2">
+                <button class="btn-block btn btn-danger btn-sm" (click)="cerrarModal(false)">CANCELAR</button>
+            </div>
+        </div>
+    </form>
+</div>

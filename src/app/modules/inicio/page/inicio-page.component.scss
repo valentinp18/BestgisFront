@@ -1,0 +1,96 @@
+// Definir colores y estilos personalizados aquí
+.navbar-custom {
+  background-color: #06268f; /* Puedes cambiar el color aquí */
+  height: 40px; /* Altura de la barra de navegación */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text,
+.navbar-custom .nav-link {
+  color: #ffffff; /* Color del texto */
+}
+
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-text:hover,
+.navbar-custom .nav-link:hover {
+  color: #ffffff; /* Color del texto al pasar el mouse */
+}
+/* Estilos para la segunda fila */
+.second-row {
+  margin-top: 40px; /* Ajusta el margen superior según sea necesario */
+  margin-bottom: 40px; /* Ajusta el margen inferior según sea necesario */
+  background-color: #fff; /* Fondo blanco */
+}
+
+/* Estilos para los textos de la segunda fila */
+.subtitles {
+  cursor: pointer; /* Cambia el cursor al pasar sobre los textos */
+  position: relative;
+  color: #06268f; /* Color del texto */
+  margin-bottom: 10px; /* Espacio entre los textos */
+}
+
+.subtitles:hover::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px; /* Grosor de la línea */
+  background-color: #06268f; /* Color de la línea */
+  position: absolute;
+  bottom: -5px; /* Posición de la línea debajo del texto */
+  left: 0;
+}
+
+/* Estilos para los subtítulos */
+.subtitles {
+  margin-right: 20px; /* Ajusta el margen derecho según sea necesario */
+}
+
+/* Estilos para el botón "Iniciar Sesión" */
+.btn-iniciar-sesion {
+  background-color: #06268f; /* Color de fondo */
+  border-color: #06268f; /* Color del borde */
+  /* Agrega más estilos según sea necesario */
+}
+
+.btn-iniciar-sesion:hover {
+  background-color: #041f6b; /* Cambia el color al pasar el mouse */
+  border-color: #041f6b; /* Cambia el color del borde al pasar el mouse */
+}
+/* Estilos para el contenedor del botón "Iniciar Sesión" */
+.btn-container {
+  margin-top: -30px; /* Aplica un margen negativo para mover el botón hacia arriba */
+}
+
+/* Estilos para la portada */
+.portada {
+  background-color: #f0f0f0; /* Color de fondo de la portada */
+  padding: 0; /* Elimina el espaciado interno de la portada */
+  text-align: center; /* Alineación del contenido al centro */
+  width: 100vw; /* Asegura que el contenedor ocupe todo el ancho de la ventana */
+  height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+  overflow: hidden; /* Oculta cualquier desbordamiento */
+  position: relative; /* Permite posicionamiento absoluto de la imagen */
+}
+
+.portada img {
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Asegura que la imagen ocupe toda la altura del contenedor */
+  object-fit: cover; /* Cubre el contenedor sin distorsionar la imagen */
+  position: absolute; /* Posiciona la imagen de manera absoluta */
+  top: 0; /* Posición en la parte superior */
+  left: 0; /* Posición en la parte izquierda */
+}
+
+
+/* Estilos para la cuarta sección y su contenido */
+.fourth-row {
+  background-color: #f8f9fa; /* Color de fondo */
+  padding: 40px 0; /* Espaciado interno */
+}
+
+.texto-adicional {
+  font-size: 18px; /* Tamaño del texto */
+  color: #333; /* Color del texto */
+  margin-top: 20px; /* Espaciado superior */
+}
