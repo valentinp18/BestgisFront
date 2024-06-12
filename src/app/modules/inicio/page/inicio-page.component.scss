@@ -65,6 +65,7 @@
 /* Estilos para la portada */
 .portada {
   background-color: #f0f0f0; /* Color de fondo de la portada */
+<<<<<<< HEAD
   padding: 0; /* Elimina el espaciado interno de la portada */
   text-align: center; /* Alineación del contenido al centro */
   width: 100vw; /* Asegura que el contenedor ocupe todo el ancho de la ventana */
@@ -83,6 +84,19 @@
 }
 
 
+=======
+  padding: 0px 0; /* Espaciado interno de la portada */
+  text-align: center; /* Alineación del contenido al centro */
+}
+
+.portada img {
+  max-width: auto; /* Asegura que la imagen de la portada se ajuste al ancho de su contenedor */
+  max-height: auto; /* Establece la altura máxima de la imagen */
+  width: auto; /* Permite que la imagen se ajuste automáticamente al ancho máximo */
+  height: auto; /* Permite que la imagen se ajuste automáticamente a la altura máxima */
+}
+
+>>>>>>> 7c915c89e0944f73fdeb5cab06adf7f136ab0fca
 /* Estilos para la cuarta sección y su contenido */
 .fourth-row {
   background-color: #f8f9fa; /* Color de fondo */

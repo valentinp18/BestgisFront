@@ -10,12 +10,15 @@ import { CultivoRegisterComponent } from './component/Cultivo/cultivo-registro/c
 import { DroneListaComponent } from './component/Drone/drone-lista/drone-lista.component';
 import { DroneRegisterComponent } from './component/Drone/drone-registro/drone-registro.component';
 import { SharedModule } from '../shared/shared.module';
+<<<<<<< HEAD
 import { ProductoListaComponent } from './component/Producto/producto-lista/producto-lista.component';
 import { ProductoRegisterComponent } from './component/Producto/producto-registro/producto-registro.component';
 import { UbicacionListaComponent } from './component/Ubicacion/ubicacion-lista/ubicacion-lista.component';
 import { UbicacionRegisterComponent } from './component/Ubicacion/ubicacion-registro/ubicacion-registro.component';
 import { CampoAgricolaListaComponent } from './component/CampoAgricola/campo-lista/campo-lista.component';
 import { CampoAgricolaRegisterComponent } from './component/CampoAgricola/campo-registro/campo-registro.component';
+=======
+>>>>>>> 7c915c89e0944f73fdeb5cab06adf7f136ab0fca
 
 
 
@@ -26,6 +29,7 @@ import { CampoAgricolaRegisterComponent } from './component/CampoAgricola/campo-
     CultivoListaComponent,
     CultivoRegisterComponent,
     DroneListaComponent,
+<<<<<<< HEAD
     DroneRegisterComponent,
     ProductoListaComponent,
     ProductoRegisterComponent,
@@ -34,6 +38,9 @@ import { CampoAgricolaRegisterComponent } from './component/CampoAgricola/campo-
     CampoAgricolaListaComponent,
     CampoAgricolaRegisterComponent
   
+=======
+    DroneRegisterComponent
+>>>>>>> 7c915c89e0944f73fdeb5cab06adf7f136ab0fca
   ],
   imports: [
     CommonModule,

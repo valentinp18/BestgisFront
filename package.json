@@ -23,7 +23,10 @@
     "ngx-bootstrap": "^12.0.0",
     "rxjs": "~7.8.0",
     "startbootstrap-sb-admin": "^7.0.7",
+<<<<<<< HEAD
     "sweetalert2": "^11.11.1",
+=======
+>>>>>>> 7c915c89e0944f73fdeb5cab06adf7f136ab0fca
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
