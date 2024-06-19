@@ -1,7 +1,7 @@
 <div class="container-fluid px-4 mt-5">
     <div class="card bg-light mb-3">
       <div class="card-header text-center">
-        <h1 class="mt-4">MANTENIMIENTO DE PRODUCTO</h1>
+        <h1 class="mt-4">COLABORADORES</h1>
       </div>
       <div class="card-body">
         <form [formGroup]="myFormFilter">
@@ -11,26 +11,8 @@
               <div class="row">
                 <div class="col-3">
                   <div class="form-group">
-                    <label for="">Id</label>
-                    <input formControlName="idProducto" type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="form-group">
-                    <label for="">Nombre</label>
-                    <input formControlName="nombre" type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="form-group">
-                    <label for="">Tipo</label>
-                    <input formControlName="tipo" type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="form-group">
-                    <label for="">Descripcion</label>
-                    <input formControlName="descripcion" type="text" class="form-control">
+                    <label for=""> ID COLABORADOR</label>
+                    <input formContColaboradorName="idColaborador" type="text" class="form-contColaborador">
                   </div>
                 </div>
                 <div class="col-3">
@@ -49,27 +31,25 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripcion</th>
+              <th>ID PERSONA</th>
+              <th>ID ROL</th>
               <th>
-                <button (click)="crearProducto(modalEdit)" class="btn btn-primary btn-sm">
+                <button (click)="crearColaborador(modalEdit)" class="btn btn-primary btn-sm">
                   Agregar <i class="fas fa-plus"></i>
                 </button>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let Producto of Productos">
-              <td>{{ Producto.idProducto }}</td>
-              <td>{{ Producto.nombre }}</td>
-              <td>{{ Producto.tipo }}</td>
-              <td>{{ Producto.descripcion }}</td>
+            <tr *ngFor="let Colaborador of Colaboradors">
+              <td>{{ Colaborador.idColaborador }}</td>
+              <td>{{ Colaborador.idPersona }}</td>
+              <td>{{ Colaborador.idRol }}</td>
               <td>
-                <button (click)="editarProducto(modalEdit, Producto)" class="btn btn-primary btn-sm">
+                <button (click)="editarColaborador(modalEdit, Colaborador)" class="btn btn-primary btn-sm">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button (click)="eliminarRegistro(Producto.idProducto)" class="btn btn-danger btn-sm">
+                <button (click)="eliminarRegistro(Colaborador.idColaborador)" class="btn btn-danger btn-sm">
                   <i class="fas fa-trash"></i>
                 </button>
               </td>
@@ -101,7 +81,7 @@
   <!-- Template for the modal -->
   <ng-template #modalEdit let-modal>
     <div class="modal-body">
-      <app-producto-register [title]="titleModal" [Producto]="ProductoSelected" [accion]="accionModal" (closeModalEmmit)="getCloseModalEmmit($event)"></app-producto-register>
+      <app-colaborador-register [title]="titleModal" [Colaborador]="ColaboradorSelected" [accion]="accionModal" (closeModalEmmit)="getCloseModalEmmit($event)"></app-colaborador-register>
     </div>
   </ng-template>
   

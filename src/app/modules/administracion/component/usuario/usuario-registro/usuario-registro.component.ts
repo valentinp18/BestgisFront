@@ -1,44 +1,44 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccionMantConst } from '../../../../../constants/general.constants';
-import { ProductoService } from '../../../service/Producto.service';
-import { ProductoResponse } from '../../../models/Producto-response.module';
-import { ProductoRequest } from '../../../models/Producto-request.module';
+import { UsuarioService } from '../../../service/Usuario.service';
+import { UsuarioResponse } from '../../../models/Usuario-response.module';
+import { UsuarioRequest } from '../../../models/Usuario-request.module';
 
 @Component({
-  selector: 'app-producto-register',
-  templateUrl: './producto-registro.component.html',
-  styleUrls: ['./producto-registro.component.scss']
+  selector: 'app-usuario-register',
+  templateUrl: './usuario-registro.component.html',
+  styleUrls: ['./usuario-registro.component.scss']
 })
-export class ProductoRegisterComponent implements OnInit {
+export class UsuarioRegisterComponent implements OnInit {
 
   @Input() title: string = "";
-  @Input() Producto: ProductoResponse = new ProductoResponse();
+  @Input() Usuario: UsuarioResponse = new UsuarioResponse();
   @Input() accion: number = 0;
 
   @Output() closeModalEmmit = new EventEmitter<boolean>();
 
-  ProductoEnvio: ProductoRequest = new ProductoRequest();
+  UsuarioEnvio: UsuarioRequest = new UsuarioRequest();
   myForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private _ProductoService: ProductoService,
+    private _UsuarioService: UsuarioService,
   ) {
     this.myForm = this.fb.group({
-      idProducto: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
-      nombre: [null, []],
-      tipo: [null, []],
-      descripcion: [null, []]
+      idUsuario: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      idColaborador: [null, [Validators.required]],
     });
   }
 
   ngOnInit(): void {
-    this.myForm.patchValue(this.Producto);
+    this.myForm.patchValue(this.Usuario);
   }
 
   guardar() {
-    this.ProductoEnvio = this.myForm.getRawValue();
+    this.UsuarioEnvio = this.myForm.getRawValue();
     switch (this.accion) {
       case AccionMantConst.crear:
         this.crearRegistro();
@@ -50,8 +50,8 @@ export class ProductoRegisterComponent implements OnInit {
   }
 
   crearRegistro() {
-    this._ProductoService.create(this.ProductoEnvio).subscribe({
-      next: (data: ProductoResponse) => {
+    this._UsuarioService.create(this.UsuarioEnvio).subscribe({
+      next: (data: UsuarioResponse) => {
         alert("Creado de forma correcta");
       },
       error: () => {
@@ -64,8 +64,8 @@ export class ProductoRegisterComponent implements OnInit {
   }
 
   editarRegistro() {
-    this._ProductoService.update(this.ProductoEnvio).subscribe({
-      next: (data: ProductoResponse) => {
+    this._UsuarioService.update(this.UsuarioEnvio).subscribe({
+      next: (data: UsuarioResponse) => {
         alert("Actualizado de forma correcta");
       },
       error: () => {

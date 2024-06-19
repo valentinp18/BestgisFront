@@ -7,12 +7,9 @@ const routes: Routes = [
     path: '', component: TemplateComponent,
     children: [
       {
-<<<<<<< HEAD
         path: 'administracion', loadChildren: () => import("./../administracion/administracion.module").then(x => x.AdministracionModule)
       },
       {
-=======
->>>>>>> 7c915c89e0944f73fdeb5cab06adf7f136ab0fca
         path: 'mantenimiento', loadChildren: () => import("../mantenimiento/mantenimiento.module").then(x => x.MantenimientoModule)
       },
       {
