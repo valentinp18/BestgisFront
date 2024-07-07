@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { urlConstants } from '../../../../app/constants/url.constants';
+import { firestoreConstants } from '../../../../app/constants/firestore.constants';
 import { CampoAgricolaRequest } from '../models/CampoAgricola-request.module';
 import { CampoAgricolaResponse } from '../models/CampoAgricola-response.module';
 import { CrudService } from '../../shared/services/crud.service';
@@ -15,9 +15,9 @@ export class CampoAgricolaService extends CrudService<CampoAgricolaRequest, Camp
   constructor(
     protected http: HttpClient,
   ) {
-    super(http, urlConstants.CampoAgricola);
+    super(http, firestoreConstants.CampoAgricola);
   }
   getUbicaciones(): Observable<any[]> {
-    return this.http.get<any[]>(urlConstants.Ubicacion);  // Asegúrate de que esta URL sea la correcta
+    return this.http.get<any[]>(firestoreConstants.Ubicacion);  // Asegúrate de que esta URL sea la correcta
   }
 }

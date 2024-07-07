@@ -14,9 +14,6 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    // FormsModule,
-    // ReactiveFormsModule,
-    // HttpClientModule // ==> sin este no podemos consumir ningun servio web
     SharedModule
   ]
 })

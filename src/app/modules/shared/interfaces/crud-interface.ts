@@ -1,7 +1,4 @@
 import { Observable } from "rxjs";
-
-
-
 export interface CrudInterface<T, Y> {
 
     getAll(): Observable<Y[]>;

@@ -1,13 +1,14 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
 import { RolService } from '../../../service/Rol.service';
 import { RolResponse } from '../../../models/Rol-response.module';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AccionMantConst } from '../../../../../constants/general.constants';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { GenericFilterRequest } from '../../../../../models/generic-filter-request.model';
 import { GenericFilterResponse } from '../../../../../models/generic-filter-response.model';
-import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
 @Component({
   selector: 'app-rol-list',
@@ -18,23 +19,23 @@ export class RolListaComponent implements OnInit {
   modalRef?: BsModalRef;
   Rols: RolResponse[] = [];
   RolSelected: RolResponse = new RolResponse();
-  titleModal: string = "";
-  accionModal: number = 0;
+  titleModal = '';
+  accionModal = 0;
   myFormFilter: FormGroup;
-  totalItems: number = 0;
-  itemsPerPage: number = 3;
+  totalItems = 0;
+  itemsPerPage = 3;
   request: GenericFilterRequest = new GenericFilterRequest();
 
   constructor(
     private _route: Router,
     private fb: FormBuilder,
     private modalService: BsModalService,
-    private _RolService: RolService,
+    private _RolService: RolService
   ) {
     this.myFormFilter = this.fb.group({
-      idRol: ["", []],
-      descripcion: ["", []],
-      funcion: ["", []]
+      idRol: ['', []],
+      descripcion: ['', []],
+      funcion: ['', []]
     });
   }
 
@@ -49,7 +50,7 @@ export class RolListaComponent implements OnInit {
         this.totalItems = data.length;
       },
       error: (err) => {
-        console.log("error ", err);
+        console.log('error ', err);
       },
       complete: () => {
         console.log();
@@ -59,14 +60,14 @@ export class RolListaComponent implements OnInit {
 
   crearRol(template: TemplateRef<any>) {
     this.RolSelected = new RolResponse();
-    this.titleModal = "NUEVO ROL";
+    this.titleModal = 'NUEVO ROL';
     this.accionModal = AccionMantConst.crear;
     this.openModal(template);
   }
 
   editarRol(template: TemplateRef<any>, Rol: RolResponse) {
     this.RolSelected = Rol;
-    this.titleModal = "EDITAR ROL";
+    this.titleModal = 'EDITAR ROL';
     this.accionModal = AccionMantConst.editar;
     this.openModal(template);
   }
@@ -83,12 +84,12 @@ export class RolListaComponent implements OnInit {
   }
 
   eliminarRegistro(idRol: number) {
-    let result = confirm("¿Está seguro de eliminar el registro?");
+    let result = confirm('¿Está seguro de eliminar el registro?');
 
     if (result) {
       this._RolService.delete(idRol).subscribe({
         next: (data: number) => {
-          alert("Registro eliminado de forma correcta");
+          alert('Registro eliminado de forma correcta');
         },
         error: () => { },
         complete: () => {
@@ -101,9 +102,9 @@ export class RolListaComponent implements OnInit {
   filtrar() {
     let valueForm = this.myFormFilter.getRawValue();
     this.request.filtros = [
-      { name: "idRol", value: valueForm.idRol },
-      { name: "descripcion", value: valueForm.descripcion },
-      { name: "funcion", value: valueForm.funcion }
+      { name: 'idRol', value: valueForm.idRol },
+      { name: 'descripcion', value: valueForm.descripcion },
+      { name: 'funcion', value: valueForm.funcion }
     ];
     this.request.numeroPagina = 1; 
     this.request.cantidad = this.itemsPerPage;
@@ -114,10 +115,10 @@ export class RolListaComponent implements OnInit {
         this.totalItems = data.totalRegistros;
       },
       error: () => {
-        console.log("error");
+        console.log('error');
       },
       complete: () => {
-        console.log("completo");
+        console.log('completo');
       },
     });
   }

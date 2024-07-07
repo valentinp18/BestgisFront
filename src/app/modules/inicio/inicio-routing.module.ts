@@ -1,5 +1,3 @@
-// inicio-routing.module.ts
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioPageComponent } from './page/inicio-page.component';
@@ -10,7 +8,7 @@ const routes: Routes = [
     component: InicioPageComponent
   },
   {
-    path: 'auth', // Esta es la ruta a la que queremos redirigir
+    path: 'auth', 
     loadChildren: () => import("../auth/auth.module").then(m => m.AuthModule)
   }
 ];

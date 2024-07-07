@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AccionMantConst } from '../../../../../constants/general.constants';
 import { RolService } from '../../../service/Rol.service';
 import { RolResponse } from '../../../models/Rol-response.module';
@@ -12,18 +13,18 @@ import { RolRequest } from '../../../models/Rol-request.module';
 })
 export class RolRegisterComponent implements OnInit {
 
-  @Input() title: string = "";
-  @Input() Rol: RolResponse = new RolResponse();
-  @Input() accion: number = 0;
+  @Input() title = '';
+  @Input() Rol = new RolResponse();
+  @Input() accion = 0;
 
   @Output() closeModalEmmit = new EventEmitter<boolean>();
 
-  RolEnvio: RolRequest = new RolRequest();
+  RolEnvio = new RolRequest();
   myForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private _RolService: RolService,
+    private _RolService: RolService
   ) {
     this.myForm = this.fb.group({
       idRol: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
@@ -51,10 +52,10 @@ export class RolRegisterComponent implements OnInit {
   crearRegistro() {
     this._RolService.create(this.RolEnvio).subscribe({
       next: (data: RolResponse) => {
-        alert("Creado de forma correcta");
+        alert('Creado de forma correcta');
       },
       error: () => {
-        alert("Ocurrió un error");
+        alert('Ocurrió un error');
       },
       complete: () => {
         this.cerrarModal(true);
@@ -65,10 +66,10 @@ export class RolRegisterComponent implements OnInit {
   editarRegistro() {
     this._RolService.update(this.RolEnvio).subscribe({
       next: (data: RolResponse) => {
-        alert("Actualizado de forma correcta");
+        alert('Actualizado de forma correcta');
       },
       error: () => {
-        alert("Ocurrió un error");
+        alert('Ocurrió un error');
       },
       complete: () => {
         this.cerrarModal(true);

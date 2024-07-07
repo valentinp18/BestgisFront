@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { LoginRequest } from '../../models/login-request.model';
-import { AuthService } from '../../service/auth.service';
-import { LoginResponse } from '../../../../models/login-response.model';
 import { Router } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,38 +10,33 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  loginRequest: LoginRequest = new LoginRequest();
 
   constructor(
     private fb: FormBuilder,
-    private _authService: AuthService, 
-    private _router: Router
+    private authService: AuthService,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
     });
   }
 
   login() {
-    console.log(this.loginForm.getRawValue());
-    this.loginRequest = this.loginForm.getRawValue();
-
-    this._authService.login(this.loginRequest).subscribe({
-      next: (data: LoginResponse) => {
-        console.log(data);
-        if (data.success) {
-          sessionStorage.setItem("token", data.token );
-          sessionStorage.setItem("idUsuario", data.usuario.id.toString() );
-          sessionStorage.setItem("username", data.usuario.username );
-          sessionStorage.setItem("rolId", data.rol.idRol.toString() );
-          this._router.navigate(['dashboard']);
-        } else {
-          alert("Error: " + data.mensaje); 
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe({
+        next: (user) => {
+          console.log('Login exitoso', user);
+          sessionStorage.setItem("idUsuario", user.uid);
+          sessionStorage.setItem("email", user.email);
+          this.router.navigate(['dashboard']);
+        },
+        error: (err) => {
+          console.error('Error en el login', err);
+          alert("Error: " + err.message);
         }
-      },
-      error: (err) => {},
-      complete: () => { },
-    });
+      });
+    }
   }
 }
