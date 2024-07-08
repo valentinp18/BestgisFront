@@ -2,25 +2,27 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { AuthInterceptor } from './services/auth.interceptor';
-
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth } from '@angular/fire/auth';
-import { provideFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 
-@NgModule({ declarations: [
-        AppComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        FormsModule], providers: [
-        AuthInterceptor,
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideAuth(() => provideAuth()), // Ajusta esto según la documentación de AngularFire
-        provideFirestore(() => provideFirestore()),
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
-export class AppConfig { }
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../app/modules/auth/service/auth.service';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule
+  ],
+  providers: [AuthService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
