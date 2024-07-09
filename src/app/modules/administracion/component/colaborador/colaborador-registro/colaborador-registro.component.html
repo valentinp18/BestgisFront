@@ -1,38 +1,62 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cerrarModal(false)">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <form [formGroup]="myForm">
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">ID Persona</label>
-                <input formControlName="idPersona" type="text" class="form-control" placeholder="Ingrese el ID de la Persona">
-            </div>
-            <div *ngIf="myForm.get('estado')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('estado')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">ID Rol</label>
-                <input formControlName="idRol" type="text" class="form-control" placeholder="Ingrese el ID de rol">
-            </div>
-            <div *ngIf="myForm.get('estado')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('estado')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button (click)="cerrarModal(false)" class="btn-block btn btn-danger btn-sm">CANCELAR</button>
-            </div>
-        </div>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} COLABORADOR</h2>
+    
+    <form (ngSubmit)="onSubmit()" #colaboradorForm="ngForm">
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input type="email" class="form-control" id="correo" name="correo" [(ngModel)]="colaborador.correo" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="colaborador.nombre" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="colaborador.apellido" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="tipo_documento" class="form-label">Tipo de Documento</label>
+        <select class="form-select" id="tipo_documento" name="tipo_documento" [(ngModel)]="colaborador.tipo_documento" required>
+          <option value="DNI">DNI</option>
+          <option value="Carnet Extranjería">Carnet Extranjería</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="numero_documento" class="form-label">Número de Documento</label>
+        <input type="text" class="form-control" id="numero_documento" name="numero_documento" [(ngModel)]="colaborador.numero_documento" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="sexo" class="form-label">Sexo</label>
+        <select class="form-select" id="sexo" name="sexo" [(ngModel)]="colaborador.sexo" required>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" [(ngModel)]="colaborador.fecha_nacimiento" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="tel" class="form-control" id="telefono" name="telefono" [(ngModel)]="colaborador.telefono" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="colaborador.direccion" required>
+      </div>
+  
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="!colaboradorForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
     </form>
-</div>
+  </div>

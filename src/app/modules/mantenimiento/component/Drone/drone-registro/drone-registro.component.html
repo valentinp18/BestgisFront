@@ -1,53 +1,31 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cerrarModal(false)">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <form [formGroup]="myForm">
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Modelo</label>
-                <input formControlName="modelo" type="text" class="form-control" placeholder="Ingrese el modelo de Drone">
-            </div>
-            <div *ngIf="myForm.get('modelo')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('modelo')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Tipo</label>
-                <input formControlName="tipo" type="text" class="form-control" placeholder="Ingrese el tipo de Drone">
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Capacidad</label>
-                <input formControlName="capacidad" type="text" class="form-control" placeholder="Ingrese la capacidad de litos del Drone">
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Descripción</label>
-                <input formControlName="descripcion" type="text" class="form-control" placeholder="Ingrese la descripción del cultivo">
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Mantenimiento</label>
-                <input formControlName="mantenimiento" type="text" class="form-control" placeholder="Ingrese la fecha de su último mantenimiento">
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button (click)="cerrarModal(false)" class="btn-block btn btn-danger btn-sm">CANCELAR</button>
-            </div>
-        </div>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} DRONE</h2>
+  
+    <form (ngSubmit)="onSubmit()" #droneForm="ngForm">
+      <div class="mb-3">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" class="form-control" id="modelo" name="modelo" [(ngModel)]="drone.modelo" required>
+      </div>
+      <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <input type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="drone.tipo" required>
+      </div>
+      <div class="mb-3">
+        <label for="capacidad" class="form-label">Capacidad</label>
+        <input type="text" class="form-control" id="capacidad" name="capacidad" [(ngModel)]="drone.capacidad" required>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="drone.descripcion" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="mantenimiento" class="form-label">Mantenimiento</label>
+        <input type="text" class="form-control" id="mantenimiento" name="mantenimiento" [(ngModel)]="drone.mantenimiento" required>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="!droneForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
     </form>
-</div>
+  </div>
+  

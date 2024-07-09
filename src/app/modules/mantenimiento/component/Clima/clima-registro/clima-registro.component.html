@@ -1,35 +1,18 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cerrarModal(false)">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <form [formGroup]="myForm">
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Estado</label>
-                <input formControlName="estado" type="text" class="form-control" placeholder="Ingrese el estado del clima">
-            </div>
-            <div *ngIf="myForm.get('estado')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('estado')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Observacion</label>
-                <input formControlName="observacion" type="text" class="form-control" placeholder="Ingrese si hay observaciones">
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button (click)="cerrarModal(false)" class="btn-block btn btn-danger btn-sm">CANCELAR</button>
-            </div>
-        </div>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} CLIMA</h2>
+    
+    <form (ngSubmit)="onSubmit()" #climaForm="ngForm">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="clima.nombre" required>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="clima.descripcion" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="!climaForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
     </form>
-</div>
+  </div>

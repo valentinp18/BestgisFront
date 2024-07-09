@@ -1,83 +1,54 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { AccionMantConst } from '../../../../../constants/general.constants';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RolService } from '../../../service/Rol.service';
-import { RolResponse } from '../../../models/Rol-response.module';
-import { RolRequest } from '../../../models/Rol-request.module';
 
 @Component({
-  selector: 'app-rol-register',
+  selector: 'app-rol-registro',
   templateUrl: './rol-registro.component.html',
   styleUrls: ['./rol-registro.component.scss']
 })
-export class RolRegisterComponent implements OnInit {
-
-  @Input() title = '';
-  @Input() Rol = new RolResponse();
-  @Input() accion = 0;
-
-  @Output() closeModalEmmit = new EventEmitter<boolean>();
-
-  RolEnvio = new RolRequest();
-  myForm: FormGroup;
+export class RolRegistroComponent implements OnInit {
+  rol: any = { nombre: '', funcion: '' };
+  id: string | null = null;
 
   constructor(
-    private fb: FormBuilder,
-    private _RolService: RolService
-  ) {
-    this.myForm = this.fb.group({
-      idRol: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
-      descripcion: [null, [Validators.required]],
-      funcion: [null, []],
-    });
-  }
+    private rolService: RolService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.myForm.patchValue(this.Rol);
-  }
-
-  guardar() {
-    this.RolEnvio = this.myForm.getRawValue();
-    switch (this.accion) {
-      case AccionMantConst.crear:
-        this.crearRegistro();
-        break;
-      case AccionMantConst.editar:
-        this.editarRegistro();
-        break;
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.rolService.getRol(this.id).subscribe(data => {
+        this.rol = data;
+      });
     }
   }
 
-  crearRegistro() {
-    this._RolService.create(this.RolEnvio).subscribe({
-      next: (data: RolResponse) => {
-        alert('Creado de forma correcta');
-      },
-      error: () => {
-        alert('Ocurrió un error');
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  onSubmit(): void {
+    if (this.id) {
+      this.rolService.updateRol(this.id, this.rol)
+        .then(() => {
+          console.log('Rol actualizado con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al actualizar rol:', err));
+    } else {
+      this.rolService.createRol(this.rol)
+        .then(() => {
+          console.log('Rol creado con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al crear rol:', err));
+    }
   }
 
-  editarRegistro() {
-    this._RolService.update(this.RolEnvio).subscribe({
-      next: (data: RolResponse) => {
-        alert('Actualizado de forma correcta');
-      },
-      error: () => {
-        alert('Ocurrió un error');
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  cancelar(): void {
+    this.navigateToList();
   }
 
-  cerrarModal(res: boolean) {
-    this.closeModalEmmit.emit(res);
+  private navigateToList(): void {
+    this.router.navigate(['dashboard/administracion/rol']);
   }
 }

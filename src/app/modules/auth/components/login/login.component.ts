@@ -26,10 +26,8 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
-        next: (user) => {
-          console.log('Login exitoso', user);
-          sessionStorage.setItem("idUsuario", user.uid);
-          sessionStorage.setItem("email", user.email);
+        next: () => {
+          console.log('Login exitoso');
           this.router.navigate(['dashboard']);
         },
         error: (err) => {

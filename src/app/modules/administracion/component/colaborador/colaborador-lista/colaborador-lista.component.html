@@ -1,87 +1,38 @@
-<div class="container-fluid px-4 mt-5">
-    <div class="card bg-light mb-3">
-      <div class="card-header text-center">
-        <h1 class="mt-4">COLABORADORES</h1>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="myFormFilter">
-          <div class="card bg-light mb-3">
-            <div class="card-header">BUSQUEDA</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-3">
-                  <div class="form-group">
-                    <label for=""> ID COLABORADOR</label>
-                    <input formContColaboradorName="idColaborador" type="text" class="form-contColaborador">
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="form-group">
-                    <br>
-                    <button (click)="filtrar()" class="btn btn-primary btn-sm">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>ID PERSONA</th>
-              <th>ID ROL</th>
-              <th>
-                <button (click)="crearColaborador(modalEdit)" class="btn btn-primary btn-sm">
-                  Agregar <i class="fas fa-plus"></i>
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let Colaborador of Colaboradors">
-              <td>{{ Colaborador.idColaborador }}</td>
-              <td>{{ Colaborador.idPersona }}</td>
-              <td>{{ Colaborador.idRol }}</td>
-              <td>
-                <button (click)="editarColaborador(modalEdit, Colaborador)" class="btn btn-primary btn-sm">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button (click)="eliminarRegistro(Colaborador.idColaborador)" class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="row">
-          <div class="col-xs-8 col-8">
-            <pagination (pageChanged)="changePage($event)" [totalItems]="totalItems"
-              [itemsPerPage]="itemsPerPage" [previousText]="'Anterior'" [nextText]="'Siguiente'">
-            </pagination>
-          </div>
-          <div class="col-xs-4 col-4">
-            <select (change)="changeItemsPerPage()" [(ngModel)]="itemsPerPage" class="form-select">
-              <option value="3">3</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="30">30</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </div>
-        </div>
-      </div>
+<div class="container mt-4">
+    <div class="d-flex mb-3">
+      <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Colaborador</button>
     </div>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Correo</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Tipo Documento</th>
+          <th>Número Documento</th>
+          <th>Sexo</th>
+          <th>Fecha Nacimiento</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let colaborador of colaboradores">
+          <td>{{ colaborador.correo }}</td>
+          <td>{{ colaborador.nombre }}</td>
+          <td>{{ colaborador.apellido }}</td>
+          <td>{{ colaborador.tipo_documento }}</td>
+          <td>{{ colaborador.numero_documento }}</td>
+          <td>{{ colaborador.sexo }}</td>
+          <td>{{ colaborador.fecha_nacimiento }}</td>
+          <td>{{ colaborador.telefono }}</td>
+          <td>{{ colaborador.direccion }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', colaborador.id]">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteColaborador(colaborador.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
-  <!-- Template for the modal -->
-  <ng-template #modalEdit let-modal>
-    <div class="modal-body">
-      <app-colaborador-register [title]="titleModal" [Colaborador]="ColaboradorSelected" [accion]="accionModal" (closeModalEmmit)="getCloseModalEmmit($event)"></app-colaborador-register>
-    </div>
-  </ng-template>
-  

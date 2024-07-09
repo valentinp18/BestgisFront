@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    <div class="d-flex mb-3">
+      <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Informe</button>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Fecha</th>
+          <th>Observación</th>
+          <th>Evidencia</th>
+          <th>Clima</th>
+          <th>Misión</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let informe of informes">
+          <td>{{ informe.nombre }}</td>
+          <td>{{ informe.fecha_informe }}</td>
+          <td>{{ informe.observacion }}</td>
+          <td><a [href]="informe.url_evidencia" target="_blank">Ver evidencia</a></td>
+          <td>{{ informe.clima_nombre || 'No disponible' }}</td>
+          <td>{{ informe.mision_info?.razon || 'No disponible' }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', informe.id]">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteInforme(informe.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

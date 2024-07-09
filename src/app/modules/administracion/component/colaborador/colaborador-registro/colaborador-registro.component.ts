@@ -1,82 +1,95 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccionMantConst } from '../../../../../constants/general.constants';
+// colaborador-registro.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ColaboradorService } from '../../../service/Colaborador.service';
-import { ColaboradorResponse } from '../../../models/Colaborador-response.module';
-import { ColaboradorRequest } from '../../../models/Colaborador-request.module';
 
 @Component({
-  selector: 'app-colaborador-register',
+  selector: 'app-colaborador-registro',
   templateUrl: './colaborador-registro.component.html',
   styleUrls: ['./colaborador-registro.component.scss']
 })
-export class ColaboradorRegisterComponent implements OnInit {
-
-  @Input() title: string = "";
-  @Input() Colaborador: ColaboradorResponse = new ColaboradorResponse();
-  @Input() accion: number = 0;
-
-  @Output() closeModalEmmit = new EventEmitter<boolean>();
-
-  ColaboradorEnvio: ColaboradorRequest = new ColaboradorRequest();
-  myForm: FormGroup;
+export class ColaboradorRegistroComponent implements OnInit {
+  colaborador: any = {
+    correo: '',
+    nombre: '',
+    apellido: '',
+    tipo_documento: '',
+    numero_documento: '',
+    sexo: '',
+    fecha_nacimiento: '',
+    telefono: '',
+    direccion: ''
+  };
+  id: string | null = null;
+  isLoading: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private _ColaboradorService: ColaboradorService,
-  ) {
-    this.myForm = this.fb.group({
-      idColaborador: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
-      idPersona: [null, [Validators.required]],
-      idRol: [null, [Validators.required]],
-    });
-  }
+    private colaboradorService: ColaboradorService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.myForm.patchValue(this.Colaborador);
-  }
-
-  guardar() {
-    this.ColaboradorEnvio = this.myForm.getRawValue();
-    switch (this.accion) {
-      case AccionMantConst.crear:
-        this.crearRegistro();
-        break;
-      case AccionMantConst.editar:
-        this.editarRegistro();
-        break;
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.loadColaborador(this.id);
     }
   }
 
-  crearRegistro() {
-    this._ColaboradorService.create(this.ColaboradorEnvio).subscribe({
-      next: (data: ColaboradorResponse) => {
-        alert("Creado de forma correcta");
+  loadColaborador(id: string): void {
+    this.isLoading = true;
+    this.colaboradorService.getColaborador(id).subscribe(
+      data => {
+        this.colaborador = data;
+        if (this.colaborador.fecha_nacimiento) {
+          this.colaborador.fecha_nacimiento = this.convertirFechaParaInput(this.colaborador.fecha_nacimiento);
+        }
+        this.isLoading = false;
       },
-      error: () => {
-        alert("Ocurrió un error");
-      },
-      complete: () => {
-        this.cerrarModal(true);
+      error => {
+        console.error('Error al cargar el colaborador:', error);
+        this.isLoading = false;
       }
-    });
+    );
   }
 
-  editarRegistro() {
-    this._ColaboradorService.update(this.ColaboradorEnvio).subscribe({
-      next: (data: ColaboradorResponse) => {
-        alert("Actualizado de forma correcta");
-      },
-      error: () => {
-        alert("Ocurrió un error");
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  onSubmit(): void {
+    if (this.colaborador.fecha_nacimiento) {
+      this.colaborador.fecha_nacimiento = this.convertirFechaParaFirestore(this.colaborador.fecha_nacimiento);
+    }
+
+    if (this.id) {
+      this.colaboradorService.updateColaborador(this.id, this.colaborador)
+        .then(() => {
+          console.log('Colaborador actualizado con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al actualizar colaborador:', err));
+    } else {
+      this.colaboradorService.createColaborador(this.colaborador)
+        .then(() => {
+          console.log('Colaborador creado con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al crear colaborador:', err));
+    }
   }
 
-  cerrarModal(res: boolean) {
-    this.closeModalEmmit.emit(res);
+  cancelar(): void {
+    this.navigateToList();
+  }
+
+  private navigateToList(): void {
+    this.router.navigate(['dashboard/administracion/colaborador']);
+  }
+
+  convertirFechaParaInput(fechaString: string): string {
+    const [dia, mes, anio] = fechaString.split('/');
+    return `${anio}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+  }
+
+  convertirFechaParaFirestore(fechaInput: string): string {
+    const [anio, mes, dia] = fechaInput.split('-');
+    return `${dia}/${mes}/${anio}`;
   }
 }

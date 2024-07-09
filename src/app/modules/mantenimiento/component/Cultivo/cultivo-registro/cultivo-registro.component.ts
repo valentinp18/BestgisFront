@@ -1,84 +1,54 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccionMantConst } from '../../../../../constants/general.constants';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CultivoService } from '../../../service/Cultivo.service';
-import { CultivoResponse } from '../../../models/Cultivo-response.module';
-import { CultivoRequest } from '../../../models/Cultivo-request.module';
 
 @Component({
-  selector: 'app-cultivo-register',
+  selector: 'app-cultivo-registro',
   templateUrl: './cultivo-registro.component.html',
   styleUrls: ['./cultivo-registro.component.scss']
 })
-export class CultivoRegisterComponent implements OnInit {
-
-  @Input() title: string = "";
-  @Input() Cultivo: CultivoResponse = new CultivoResponse();
-  @Input() accion: number = 0;
-
-  @Output() closeModalEmmit = new EventEmitter<boolean>();
-
-  CultivoEnvio: CultivoRequest = new CultivoRequest();
-  myForm: FormGroup;
+export class CultivoRegistroComponent implements OnInit {
+  cultivo: any = { nombre: '', descripcion: '', etapa: '', tipo: '' };
+  id: string | null = null;
 
   constructor(
-    private fb: FormBuilder,
-    private _CultivoService: CultivoService,
-  ) {
-    this.myForm = this.fb.group({
-      idCultivo: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
-      nombre: [null, [Validators.required]],
-      tipo: [null, []],
-      condicion: [null, []],
-      descripcion: [null, []]
-    });
-  }
+    private cultivoService: CultivoService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.myForm.patchValue(this.Cultivo);
-  }
-
-  guardar() {
-    this.CultivoEnvio = this.myForm.getRawValue();
-    switch (this.accion) {
-      case AccionMantConst.crear:
-        this.crearRegistro();
-        break;
-      case AccionMantConst.editar:
-        this.editarRegistro();
-        break;
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.cultivoService.getCultivo(this.id).subscribe(data => {
+        this.cultivo = data;
+      });
     }
   }
 
-  crearRegistro() {
-    this._CultivoService.create(this.CultivoEnvio).subscribe({
-      next: (data: CultivoResponse) => {
-        alert("Creado de forma correcta");
-      },
-      error: () => {
-        alert("Ocurrió un error");
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  onSubmit(): void {
+    if (this.id) {
+      this.cultivoService.updateCultivo(this.id, this.cultivo)
+        .then(() => {
+          console.log('Cultivo actualizado con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al actualizar cultivo:', err));
+    } else {
+      this.cultivoService.createCultivo(this.cultivo)
+        .then(() => {
+          console.log('Cultivo creado con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al crear cultivo:', err));
+    }
   }
 
-  editarRegistro() {
-    this._CultivoService.update(this.CultivoEnvio).subscribe({
-      next: (data: CultivoResponse) => {
-        alert("Actualizado de forma correcta");
-      },
-      error: () => {
-        alert("Ocurrió un error");
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  cancelar(): void {
+    this.navigateToList();
   }
 
-  cerrarModal(res: boolean) {
-    this.closeModalEmmit.emit(res);
+  private navigateToList(): void {
+    this.router.navigate(['dashboard/mantenimiento/cultivo']);
   }
 }

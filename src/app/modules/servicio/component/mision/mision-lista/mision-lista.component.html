@@ -1,0 +1,42 @@
+<div class="container mt-4">
+    <div class="d-flex mb-3">
+      <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nueva Misión</button>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Fecha</th>
+          <th>Razón</th>
+          <th>Observación</th>
+          <th>Cultivo</th>
+          <th>Campo Agrícola</th>
+          <th>Producto</th>
+          <th>Drone</th>
+          <th>Colaborador</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mision of misiones">
+          <td>{{ mision.fecha }}</td>
+          <td>{{ mision.razon }}</td>
+          <td>{{ mision.observacion }}</td>
+          <td>{{ mision.cultivo_nombre || 'No disponible' }}</td>
+          <td>
+            {{ mision.campo_agricola_info?.departamento || 'No disponible' }},
+            {{ mision.campo_agricola_info?.provincia || 'No disponible' }}
+          </td>
+          <td>{{ mision.producto_info?.nombre || 'No disponible' }}</td>
+          <td>{{ mision.drone_info?.modelo || 'No disponible' }}</td>
+          <td>
+            {{ mision.colaborador_info?.apellido || 'No disponible' }},
+            {{ mision.colaborador_info?.nombre || 'No disponible' }}
+          </td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', mision.id]">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteMision(mision.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

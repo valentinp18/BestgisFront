@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} MISIÓN</h2>
+  
+  <form (ngSubmit)="onSubmit()" #misionForm="ngForm" *ngIf="!isLoading">
+    <div class="mb-3">
+      <label for="fecha" class="form-label">Fecha</label>
+      <input type="date" class="form-control" id="fecha" name="fecha" [(ngModel)]="mision.fecha" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="razon" class="form-label">Razón</label>
+      <select class="form-select" id="razon" name="razon" [(ngModel)]="razonSeleccionada" (ngModelChange)="onRazonChange()" required>
+        <option *ngFor="let razon of razones" [value]="razon">{{ razon }}</option>
+      </select>
+    </div>
+    
+    <div class="mb-3" *ngIf="razonSeleccionada === 'Otros'">
+      <label for="razonPersonalizada" class="form-label">Especifique otra razón</label>
+      <input type="text" class="form-control" id="razonPersonalizada" name="razonPersonalizada" 
+             [(ngModel)]="razonPersonalizada" (ngModelChange)="onRazonPersonalizadaChange()" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="observacion" class="form-label">Observación</label>
+      <textarea class="form-control" id="observacion" name="observacion" [(ngModel)]="mision.observacion" rows="3"></textarea>
+    </div>
+    
+    <div class="mb-3">
+      <label for="cultivo_id" class="form-label">Cultivo</label>
+      <select class="form-select" id="cultivo_id" name="cultivo_id" [(ngModel)]="mision.cultivo_id" required>
+        <option *ngFor="let cultivo of cultivos" [value]="cultivo.id">{{ cultivo.nombre }}</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="campo_agricola_id" class="form-label">Campo Agrícola</label>
+      <select class="form-select" id="campo_agricola_id" name="campo_agricola_id" [(ngModel)]="mision.campo_agricola_id" required>
+        <option *ngFor="let campo of campos_agricolas" [value]="campo.id">
+          {{ campo.departamento }}, {{ campo.provincia }}, {{ campo.distrito }} - {{ campo.tipo_tierra }}
+        </option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="producto_id" class="form-label">Producto</label>
+      <select class="form-select" id="producto_id" name="producto_id" [(ngModel)]="mision.producto_id" required>
+        <option *ngFor="let producto of productos" [value]="producto.id">{{ producto.nombre }} - {{ producto.tipo }}</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="drone_id" class="form-label">Drone</label>
+      <select class="form-select" id="drone_id" name="drone_id" [(ngModel)]="mision.drone_id" required>
+        <option *ngFor="let drone of drones" [value]="drone.id">{{ drone.modelo }} - {{ drone.tipo }}</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="colaborador_id" class="form-label">Colaborador</label>
+      <select class="form-select" id="colaborador_id" name="colaborador_id" [(ngModel)]="mision.colaborador_id" required>
+        <option *ngFor="let colaborador of colaboradores" [value]="colaborador.id">
+          {{ colaborador.apellido }}, {{ colaborador.nombre }} ({{ colaborador.correo }})
+        </option>
+      </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">{{ id ? 'Actualizar' : 'Crear' }} Misión</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>
+  </form>
+</div>

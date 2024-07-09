@@ -1,23 +1,53 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firestoreConstants } from '../../../../app/constants/firestore.constants';
-import { CampoAgricolaRequest } from '../models/CampoAgricola-request.module';
-import { CampoAgricolaResponse } from '../models/CampoAgricola-response.module';
-import { CrudService } from '../../shared/services/crud.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CampoAgricolaService extends CrudService<CampoAgricolaRequest, CampoAgricolaResponse> {
+export class CampoAgricolaService {
+  constructor(private firestore: AngularFirestore) {}
 
-  constructor(
-    protected http: HttpClient,
-  ) {
-    super(http, firestoreConstants.CampoAgricola);
+  getCamposAgricolas(): Observable<any[]> {
+    return this.firestore.collection('campos_agricolas').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as { [key: string]: any };
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
+
+  createCampoAgricola(campoAgricola: any): Promise<any> {
+    return this.firestore.collection('campos_agricolas').add(campoAgricola);
+  }
+
+  updateCampoAgricola(id: string, data: any): Promise<void> {
+    return this.firestore.collection('campos_agricolas').doc(id).update(data);
+  }
+
+  deleteCampoAgricola(id: string): Promise<void> {
+    return this.firestore.collection('campos_agricolas').doc(id).delete();
+  }
+
+  getCampoAgricola(id: string): Observable<any> {
+    return this.firestore.collection('campos_agricolas').doc(id).snapshotChanges().pipe(
+      map(action => {
+        const data = action.payload.data() as { [key: string]: any };
+        const id = action.payload.id;
+        return { id, ...data };
+      })
+    );
+  }
+
   getUbicaciones(): Observable<any[]> {
-    return this.http.get<any[]>(firestoreConstants.Ubicacion);  // Asegúrate de que esta URL sea la correcta
+    return this.firestore.collection('ubicaciones').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as { [key: string]: any };
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
 }

@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, DocumentData } from '@angular/fire/compat/firestore';
 import { Observable, from, switchMap, of } from 'rxjs';
-
-interface ColaboradorData {
-  email: string;
-}
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,32 +17,25 @@ export class AuthService {
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       switchMap(userCredential => {
         if (userCredential.user) {
-          const user = userCredential.user;
-          return this.firestore.collection('colaborador').doc<ColaboradorData>(user.uid).get().pipe(
-            switchMap(docSnapshot => {
-              if (docSnapshot.exists) {
-                return of({
-                  uid: user.uid,
-                  email: user.email
-                });
-              } else {
-                return from(this.firestore.collection('colaborador').doc(user.uid).set({ email: user.email })).pipe(
-                  switchMap(() => of({
-                    uid: user.uid,
-                    email: user.email
-                  }))
-                );
-              }
-            })
-          );
+          return from(userCredential.user.getIdToken());
         } else {
           return of(null);
+        }
+      }),
+      tap(token => {
+        if (token) {
+          sessionStorage.setItem('token', token);
         }
       })
     );
   }
 
   logout(): Promise<void> {
+    sessionStorage.removeItem('token');
     return this.afAuth.signOut();
+  }
+
+  isLoggedIn(): boolean {
+    return !!sessionStorage.getItem('token');
   }
 }

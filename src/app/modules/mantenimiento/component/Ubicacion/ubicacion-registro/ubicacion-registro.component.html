@@ -1,65 +1,31 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cerrarModal(false)">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <form [formGroup]="myForm">
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Departamento</label>
-                <input formControlName="departamento" type="text" class="form-control" placeholder="Ingrese el Departamento">
-            </div>
-            <div *ngIf="myForm.get('departamento')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('departamento')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Provincia</label>
-                <input formControlName="provincia" type="text" class="form-control" placeholder="Ingrese la Provincia">
-            </div>
-            <div *ngIf="myForm.get('provincia')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('provincia')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Distrito</label>
-                <input formControlName="distrito" type="text" class="form-control" placeholder="Ingrese el Distrito">
-            </div>
-            <div *ngIf="myForm.get('distrito')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('distrito')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Centro Poblado</label>
-                <input formControlName="centroPoblado" type="text" class="form-control" placeholder="Ingrese el Centro Poblado">
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Nombre del Lugar</label>
-                <input formControlName="nombreLugar" type="text" class="form-control" placeholder="Ingrese el nombre del lugar">
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">GPS</label>
-                <input formControlName="gps" type="text" class="form-control" placeholder="Ingrese el GPS del lugar">
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button (click)="cerrarModal(false)" class="btn-block btn btn-danger btn-sm">CANCELAR</button>
-            </div>
-        </div>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} UBICACIÓN</h2>
+  
+    <form (ngSubmit)="onSubmit()" #ubicacionForm="ngForm">
+      <div class="mb-3">
+        <label for="departamento" class="form-label">Departamento</label>
+        <input type="text" class="form-control" id="departamento" name="departamento" [(ngModel)]="ubicacion.departamento" required>
+      </div>
+      <div class="mb-3">
+        <label for="provincia" class="form-label">Provincia</label>
+        <input type="text" class="form-control" id="provincia" name="provincia" [(ngModel)]="ubicacion.provincia" required>
+      </div>
+      <div class="mb-3">
+        <label for="distrito" class="form-label">Distrito</label>
+        <input type="text" class="form-control" id="distrito" name="distrito" [(ngModel)]="ubicacion.distrito" required>
+      </div>
+      <div class="mb-3">
+        <label for="centro_poblado" class="form-label">Centro Poblado</label>
+        <input type="text" class="form-control" id="centro_poblado" name="centro_poblado" [(ngModel)]="ubicacion.centro_poblado" required>
+      </div>
+      <div class="mb-3">
+        <label for="gps" class="form-label">GPS</label>
+        <input type="text" class="form-control" id="gps" name="gps" [(ngModel)]="ubicacion.gps" required>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="!ubicacionForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
     </form>
-</div>
+  </div>
+  

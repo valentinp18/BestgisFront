@@ -7,52 +7,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TemplateSidebarComponent implements OnInit {
   menu: any[] = [];
-  ngOnInit(): void {
-    
-    this.rellenarMenu();
 
+  ngOnInit(): void {
+    this.rellenarMenu();
   }
 
   rellenarMenu() {
-    let rolId = sessionStorage.getItem("rolId");
-    
-    switch (rolId) {
-      //TODO: CUANDO ES ADMINISTRADOR
-      case "1":
-        this.menu = [
-          {
-
-            name: "ADMINISTRACION", target: "TargerMantenimiento", icon: "fas fa-pencil-alt",
-            subMenu: [
-              { name: "Rol", url: "administracion/rol", icon: "fas fa-card" },
-              { name: "Usuario", url: "administracion/usuario", icon: "fas fa-card" },
-              { name: "Colaborador", url: "administracion/colaborador", icon: "fas fa-card" }
-            ]
-          },
-          {
-            name: "MANTENIMIENTO", target: "TargerMantenimiento", icon: "fas fa-tools",
-            subMenu: [
-              { name: "Clima", url: "mantenimiento/clima", icon: "fas fa-card" },
-              { name: "Cultivo", url: "mantenimiento/cultivo", icon: "fas fa-card" },
-              { name: "Drone", url: "mantenimiento/drone", icon: "fas fa-card" },
-              { name: "Producto", url: "mantenimiento/producto", icon: "fas fa-card" },
-              { name: "Ubicación", url: "mantenimiento/ubicacion", icon: "fas fa-card" },
-              { name: "Campo Agricola", url: "mantenimiento/campo", icon: "fas fa-card" },
-            ]
-          },
-          {
-            name: "INFORME", target: "TargerMantenimiento", icon: "fas fa-pencil-alt",
-            subMenu: [
-              { name: "Nuevo", url: "informe/nuevo", icon: "fas fa-card" },
-            ]
-          },
-        ];
-        break;
-      case "2": break;
-      case "3": break;
-      case "4": break;
-      case "5": break;
-      case "6": break;
-    }
+    this.menu = [
+      {
+        name: "ADMINISTRACION", target: "TargetAdministracion", icon: "fas fa-pencil-alt",
+        subMenu: [
+          { name: "Rol", url: "administracion/rol", icon: "fas fa-user-tag" },
+          { name: "Usuario", url: "administracion/usuario", icon: "fas fa-user" },
+          { name: "Colaborador", url: "administracion/colaborador", icon: "fas fa-users" }
+        ]
+      },
+      {
+        name: "MANTENIMIENTO", target: "TargetMantenimiento", icon: "fas fa-tools",
+        subMenu: [
+          { name: "Clima", url: "mantenimiento/clima", icon: "fas fa-cloud" },
+          { name: "Cultivo", url: "mantenimiento/cultivo", icon: "fas fa-seedling" },
+          { name: "Drone", url: "mantenimiento/drone", icon: "fas fa-plane" },
+          { name: "Producto", url: "mantenimiento/producto", icon: "fas fa-box" },
+          { name: "Ubicación", url: "mantenimiento/ubicacion", icon: "fas fa-map-marker-alt" },
+          { name: "Campo Agricola", url: "mantenimiento/campo", icon: "fas fa-tractor" },
+        ]
+      },
+      {
+        name: "SERVICIO", target: "TargetInforme", icon: "fas fa-file-alt",
+        subMenu: [
+          { name: "Cliente", url: "servicio/cliente", icon: "fas fa-user-plus" },
+          { name: "Mision", url: "servicio/mision", icon: "fas fa-rocket" }
+        ]
+      },
+      {
+        name: "DATOS", target: "TargetInforme", icon: "fas fa-database",
+        subMenu: [
+          { name: "Informe", url: "datos/informe", icon: "fas fa-file-alt" },
+          { name: "Historial", url: "datos/historial", icon: "fas fa-history" },
+          { name: "Analisis", url: "datos/analisis", icon: "fas fa-chart-line" }
+        ]
+      },
+    ];
   }
 }

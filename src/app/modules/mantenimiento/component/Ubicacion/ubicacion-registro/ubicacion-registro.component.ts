@@ -1,86 +1,54 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccionMantConst } from '../../../../../constants/general.constants';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UbicacionService } from '../../../service/Ubicacion.service';
-import { UbicacionResponse } from '../../../models/Ubicacion-response.module';
-import { UbicacionRequest } from '../../../models/Ubicacion-request.module';
 
 @Component({
-  selector: 'app-ubicacion-register',
+  selector: 'app-ubicacion-registro',
   templateUrl: './ubicacion-registro.component.html',
   styleUrls: ['./ubicacion-registro.component.scss']
 })
-export class UbicacionRegisterComponent implements OnInit {
-
-  @Input() title: string = "";
-  @Input() Ubicacion: UbicacionResponse = new UbicacionResponse();
-  @Input() accion: number = 0;
-
-  @Output() closeModalEmmit = new EventEmitter<boolean>();
-
-  UbicacionEnvio: UbicacionRequest = new UbicacionRequest();
-  myForm: FormGroup;
+export class UbicacionRegistroComponent implements OnInit {
+  ubicacion: any = { departamento: '', provincia: '', distrito: '', centro_poblado: '', gps: '' };
+  id: string | null = null;
 
   constructor(
-    private fb: FormBuilder,
-    private _UbicacionService: UbicacionService,
-  ) {
-    this.myForm = this.fb.group({
-      idUbicacion: [{ value: 0, disabled: this.accion === AccionMantConst.crear }, [Validators.required]],
-      departamento: [null, [Validators.required]],
-      provincia: [null, [Validators.required]],
-      distrito: [null, [Validators.required]],
-      centroPoblado: [null, []],
-      nombreLugar: [null, []],
-      gps: [null, []]
-    });
-  }
+    private ubicacionService: UbicacionService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.myForm.patchValue(this.Ubicacion);
-  }
-
-  guardar() {
-    this.UbicacionEnvio = this.myForm.getRawValue();
-    switch (this.accion) {
-      case AccionMantConst.crear:
-        this.crearRegistro();
-        break;
-      case AccionMantConst.editar:
-        this.editarRegistro();
-        break;
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.ubicacionService.getUbicacion(this.id).subscribe(data => {
+        this.ubicacion = data;
+      });
     }
   }
 
-  crearRegistro() {
-    this._UbicacionService.create(this.UbicacionEnvio).subscribe({
-      next: (data: UbicacionResponse) => {
-        alert("Creado de forma correcta");
-      },
-      error: () => {
-        alert("Ocurrió un error");
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  onSubmit(): void {
+    if (this.id) {
+      this.ubicacionService.updateUbicacion(this.id, this.ubicacion)
+        .then(() => {
+          console.log('Ubicación actualizada con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al actualizar ubicación:', err));
+    } else {
+      this.ubicacionService.createUbicacion(this.ubicacion)
+        .then(() => {
+          console.log('Ubicación creada con éxito');
+          this.navigateToList();
+        })
+        .catch(err => console.error('Error al crear ubicación:', err));
+    }
   }
 
-  editarRegistro() {
-    this._UbicacionService.update(this.UbicacionEnvio).subscribe({
-      next: (data: UbicacionResponse) => {
-        alert("Actualizado de forma correcta");
-      },
-      error: () => {
-        alert("Ocurrió un error");
-      },
-      complete: () => {
-        this.cerrarModal(true);
-      }
-    });
+  cancelar(): void {
+    this.navigateToList();
   }
 
-  cerrarModal(res: boolean) {
-    this.closeModalEmmit.emit(res);
+  private navigateToList(): void {
+    this.router.navigate(['dashboard/mantenimiento/ubicacion']);
   }
 }
