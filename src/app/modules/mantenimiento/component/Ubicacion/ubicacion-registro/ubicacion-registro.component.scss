@@ -1,0 +1,65 @@
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.map-content {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  height: 80vh;
+  max-height: 600px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-map {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  z-index: 1002; // Aumentado para asegurar que esté sobre los controles de zoom
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.close-map:hover {
+  background-color: #f0f0f0;
+}
+
+.close-map:focus {
+  outline: none;
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Estilos para los controles de zoom */
+:host ::ng-deep .leaflet-top.leaflet-right {
+  top: 50px; // Ajusta este valor según sea necesario
+}

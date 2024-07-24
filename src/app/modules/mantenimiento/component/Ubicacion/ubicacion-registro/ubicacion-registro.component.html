@@ -1,31 +1,47 @@
 <div class="container mt-4">
-    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} UBICACIÓN</h2>
+  <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} UBICACIÓN</h2>
   
-    <form (ngSubmit)="onSubmit()" #ubicacionForm="ngForm">
-      <div class="mb-3">
-        <label for="departamento" class="form-label">Departamento</label>
-        <input type="text" class="form-control" id="departamento" name="departamento" [(ngModel)]="ubicacion.departamento" required>
+  <form (ngSubmit)="onSubmit()" #ubicacionForm="ngForm">
+    <div class="mb-3">
+      <label for="departamento" class="form-label">Departamento</label>
+      <input type="text" class="form-control" id="departamento" name="departamento" [(ngModel)]="ubicacion.departamento" required>
+    </div>
+    <div class="mb-3">
+      <label for="provincia" class="form-label">Provincia</label>
+      <input type="text" class="form-control" id="provincia" name="provincia" [(ngModel)]="ubicacion.provincia" required>
+    </div>
+    <div class="mb-3">
+      <label for="distrito" class="form-label">Distrito</label>
+      <input type="text" class="form-control" id="distrito" name="distrito" [(ngModel)]="ubicacion.distrito" required>
+    </div>
+    <div class="mb-3">
+      <label for="centro_poblado" class="form-label">Centro Poblado (Opcional)</label>
+      <input type="text" class="form-control" id="centro_poblado" name="centro_poblado" [(ngModel)]="ubicacion.centro_poblado">
+    </div>
+
+    <div class="mb-3 position-relative">
+      <label for="gps" class="form-label">GPS (Opcional)</label>
+      <div class="input-group">
+        <input type="text" class="form-control" id="gps" name="gps" [(ngModel)]="ubicacion.gps" readonly>
+        <button type="button" class="btn btn-outline-secondary" (click)="toggleMap()">
+          {{ showMap ? 'Ocultar Mapa' : 'Mostrar Mapa' }}
+        </button>
       </div>
-      <div class="mb-3">
-        <label for="provincia" class="form-label">Provincia</label>
-        <input type="text" class="form-control" id="provincia" name="provincia" [(ngModel)]="ubicacion.provincia" required>
+    </div>
+    
+
+    <!-- Mapa modal -->
+    <div *ngIf="showMap" class="map-modal">
+      <div class="map-content">
+        <button type="button" class="close-map" (click)="toggleMap()">&times;</button>
+        <div id="map" class="map-container"></div>
       </div>
-      <div class="mb-3">
-        <label for="distrito" class="form-label">Distrito</label>
-        <input type="text" class="form-control" id="distrito" name="distrito" [(ngModel)]="ubicacion.distrito" required>
-      </div>
-      <div class="mb-3">
-        <label for="centro_poblado" class="form-label">Centro Poblado</label>
-        <input type="text" class="form-control" id="centro_poblado" name="centro_poblado" [(ngModel)]="ubicacion.centro_poblado" required>
-      </div>
-      <div class="mb-3">
-        <label for="gps" class="form-label">GPS</label>
-        <input type="text" class="form-control" id="gps" name="gps" [(ngModel)]="ubicacion.gps" required>
-      </div>
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary me-2" [disabled]="!ubicacionForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-  
+    </div>
+    
+   
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="!ubicacionForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

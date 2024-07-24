@@ -10,8 +10,9 @@ import { ProductoListaComponent } from './component/Producto/producto-lista/prod
 import { ProductoRegistroComponent } from './component/Producto/producto-registro/producto-registro.component';
 import { UbicacionListaComponent } from './component/Ubicacion/ubicacion-lista/ubicacion-lista.component';
 import { UbicacionRegistroComponent } from './component/Ubicacion/ubicacion-registro/ubicacion-registro.component';
-import { CampoAgricolaListaComponent } from './component/CampoAgricola/campo-lista/campo-agricola-lista.component';
-import { CampoAgricolaRegistroComponent } from './component/CampoAgricola/campo-registro/campo-agricola-registro.component';
+import { TierraListaComponent } from './component/Tierra/tierra-lista/tierra-lista.component';
+import { TierraRegistroComponent } from './component/Tierra/tierra-registro/tierra-registro.component';
+
 
 const routes: Routes = [
   { path: 'clima', component: ClimaListaComponent },
@@ -29,9 +30,9 @@ const routes: Routes = [
   { path: 'ubicacion', component: UbicacionListaComponent },
   { path: 'ubicacion/registro', component: UbicacionRegistroComponent },
   { path: 'ubicacion/registro/:id', component: UbicacionRegistroComponent },
-  { path: 'campo', component: CampoAgricolaListaComponent },
-  { path: 'campo/registro', component: CampoAgricolaRegistroComponent },
-  { path: 'campo/registro/:id', component: CampoAgricolaRegistroComponent },
+  { path: 'tierra', component: TierraListaComponent },
+  { path: 'tierra/registro', component: TierraRegistroComponent },
+  { path: 'tierra/registro/:id', component: TierraRegistroComponent },
 ];
 
 @NgModule({

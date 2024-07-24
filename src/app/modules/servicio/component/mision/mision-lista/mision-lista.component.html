@@ -1,33 +1,67 @@
 <div class="container mt-4">
-    <div class="d-flex mb-3">
-      <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nueva Misión</button>
-    </div>
+  <div class="d-flex mb-3">
+    <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nueva Misión</button>
+  </div>
+  <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
+          <th>ID</th>
           <th>Fecha</th>
-          <th>Razón</th>
-          <th>Observación</th>
+          <th>Cliente</th>
           <th>Cultivo</th>
-          <th>Campo Agrícola</th>
+          <th>Etapa de Cultivo</th>
+          <th>Razón</th>    
+          <th>Ubicación</th>
+          <th>Tierra</th>
+          <th>Clima</th>
           <th>Producto</th>
-          <th>Drone</th>
+          <th>Drone</th>          
+          <th>Observación</th>
+          <th>Evidencias</th>
           <th>Colaborador</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let mision of misiones">
+          <td>{{ mision.ultimo_id }}</td>
           <td>{{ mision.fecha }}</td>
-          <td>{{ mision.razon }}</td>
-          <td>{{ mision.observacion }}</td>
-          <td>{{ mision.cultivo_nombre || 'No disponible' }}</td>
           <td>
-            {{ mision.campo_agricola_info?.departamento || 'No disponible' }},
-            {{ mision.campo_agricola_info?.provincia || 'No disponible' }}
+            {{ mision.cliente_info?.apellido || 'No disponible' }},
+            {{ mision.cliente_info?.nombre || 'No disponible' }}
           </td>
+          <td>{{ mision.cultivo_nombre || 'No disponible' }}</td>
+          <td>{{ mision.etapa_cultivo || 'No disponible' }}</td>
+          <td>{{ mision.razon }}</td>
+          <td>
+            {{ mision.ubicacion_info?.departamento || 'No disponible' }},
+            {{ mision.ubicacion_info?.provincia || 'No disponible' }},
+            {{ mision.ubicacion_info?.distrito || 'No disponible' }}
+            <ng-container *ngIf="mision.ubicacion_info?.centro_poblado">
+              , {{ mision.ubicacion_info.centro_poblado }}
+            </ng-container>
+            <ng-container *ngIf="mision.ubicacion_info?.gps">
+              <br>GPS: {{ mision.ubicacion_info.gps }}
+            </ng-container>
+          </td>
+          <td>{{ mision.tierra_nombre || 'No disponible' }}</td>
+          <td>{{ mision.clima_nombre || 'No disponible' }}</td>
           <td>{{ mision.producto_info?.nombre || 'No disponible' }}</td>
           <td>{{ mision.drone_info?.modelo || 'No disponible' }}</td>
+          <td>{{ mision.observacion }}</td>
+          <td>
+            <ng-container *ngIf="mision.evidencias && mision.evidencias.length > 0; else noEvidencias">
+              <div *ngFor="let evidencia of mision.evidencias">
+                <a [href]="evidencia.url" target="_blank">
+                  {{ evidencia.tipo === 'imagen' ? 'Ver imagen' : 'Ver video' }}
+                </a>
+              </div>
+            </ng-container>
+            <ng-template #noEvidencias>
+              No hay evidencias
+            </ng-template>
+          </td>
           <td>
             {{ mision.colaborador_info?.apellido || 'No disponible' }},
             {{ mision.colaborador_info?.nombre || 'No disponible' }}
@@ -40,3 +74,4 @@
       </tbody>
     </table>
   </div>
+</div>

@@ -10,15 +10,16 @@ import { filter } from 'rxjs/operators';
 })
 export class MisionListaComponent implements OnInit {
   misiones: any[] = [];
+  showModal: boolean = false;
 
   constructor(
     private misionService: MisionService,
-    private router: Router
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
     this.getMisiones();
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -27,17 +28,21 @@ export class MisionListaComponent implements OnInit {
   }
 
   getMisiones(): void {
-    this.misionService.getMisiones().subscribe(data => {
-      this.misiones = data;
-    });
+    this.misionService.getMisiones().subscribe(
+      data => {
+        this.misiones = data;
+      },
+      error => console.error('Error al obtener misiones:', error)
+    );
   }
 
   deleteMision(id: string): void {
-    this.misionService.deleteMision(id)
-      .then(() => {
+    this.misionService.deleteMision(id).subscribe(
+      () => {
         console.log('Misión eliminada');
         this.getMisiones();
-      })
-      .catch(err => console.log(err));
+      },
+      (err: any) => console.error('Error al eliminar misión:', err)
+    );
   }
 }

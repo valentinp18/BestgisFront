@@ -1,27 +1,35 @@
 <div class="container mt-4">
-    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} CULTIVO</h2>
-    
-    <form (ngSubmit)="onSubmit()" #cultivoForm="ngForm">
-      <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cultivo.nombre" required>
-      </div>
-      <div class="mb-3">
-        <label for="tipo" class="form-label">Tipo</label>
-        <input type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="cultivo.tipo" required>
-      </div>
-      <div class="mb-3">
-        <label for="etapa" class="form-label">Etapa</label>
-        <input type="text" class="form-control" id="etapa" name="etapa" [(ngModel)]="cultivo.etapa" required>
-      </div>
-      <div class="mb-3">
-        <label for="descripcion" class="form-label">Descripción</label>
-        <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cultivo.descripcion" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary me-2" [disabled]="!cultivoForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+  <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} CULTIVO</h2>
   
+  <form (ngSubmit)="onSubmit()" #cultivoForm="ngForm">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cultivo.nombre" required>
+    </div>
+    <div class="mb-3">
+      <label for="tipo" class="form-label">Tipo</label>
+      <input type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="cultivo.tipo" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Etapas</label>
+      <div class="input-group mb-2">
+        <input type="text" class="form-control" [(ngModel)]="nuevaEtapa" name="nuevaEtapa" placeholder="Nueva Etapa">
+        <button class="btn btn-outline-secondary" type="button" (click)="agregarEtapa()">Agregar</button>
+      </div>
+      <ul class="list-group">
+        <li *ngFor="let etapa of cultivo.etapas; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+          {{etapa}}
+          <button type="button" class="btn btn-danger btn-sm" (click)="eliminarEtapa(i)">Eliminar</button>
+        </li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="cultivo.descripcion" rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="!cultivoForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

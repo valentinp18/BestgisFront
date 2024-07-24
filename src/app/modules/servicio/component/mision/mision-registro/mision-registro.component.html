@@ -2,11 +2,26 @@
   <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} MISIÓN</h2>
   
   <form (ngSubmit)="onSubmit()" #misionForm="ngForm" *ngIf="!isLoading">
+
+    <div class="mb-3" *ngIf="mision.ultimo_id">
+      <label class="form-label">ID de Misión</label>
+      <input type="text" class="form-control" [value]="mision.ultimo_id" readonly>
+    </div>
+
     <div class="mb-3">
       <label for="fecha" class="form-label">Fecha</label>
       <input type="date" class="form-control" id="fecha" name="fecha" [(ngModel)]="mision.fecha" required>
     </div>
     
+    <div class="mb-3">
+      <label for="cliente_id" class="form-label">Cliente</label>
+      <select class="form-select" id="cliente_id" name="cliente_id" [(ngModel)]="mision.cliente_id" required>
+        <option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.apellido }}, {{ cliente.nombre }}
+        </option>
+      </select>
+    </div>
+
     <div class="mb-3">
       <label for="razon" class="form-label">Razón</label>
       <select class="form-select" id="razon" name="razon" [(ngModel)]="razonSeleccionada" (ngModelChange)="onRazonChange()" required>
@@ -21,22 +36,24 @@
     </div>
     
     <div class="mb-3">
-      <label for="observacion" class="form-label">Observación</label>
-      <textarea class="form-control" id="observacion" name="observacion" [(ngModel)]="mision.observacion" rows="3"></textarea>
-    </div>
-    
-    <div class="mb-3">
       <label for="cultivo_id" class="form-label">Cultivo</label>
-      <select class="form-select" id="cultivo_id" name="cultivo_id" [(ngModel)]="mision.cultivo_id" required>
+      <select class="form-select" id="cultivo_id" name="cultivo_id" [(ngModel)]="mision.cultivo_id" (ngModelChange)="onCultivoChange()" required>
         <option *ngFor="let cultivo of cultivos" [value]="cultivo.id">{{ cultivo.nombre }}</option>
       </select>
     </div>
     
     <div class="mb-3">
-      <label for="campo_agricola_id" class="form-label">Campo Agrícola</label>
-      <select class="form-select" id="campo_agricola_id" name="campo_agricola_id" [(ngModel)]="mision.campo_agricola_id" required>
-        <option *ngFor="let campo of campos_agricolas" [value]="campo.id">
-          {{ campo.departamento }}, {{ campo.provincia }}, {{ campo.distrito }} - {{ campo.tipo_tierra }}
+      <label for="etapa_cultivo" class="form-label">Etapa de Cultivo</label>
+      <select class="form-select" id="etapa_cultivo" name="etapa_cultivo" [(ngModel)]="mision.etapa_cultivo" required>
+        <option *ngFor="let etapa of etapasCultivo" [value]="etapa">{{ etapa }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="ubicacion_id" class="form-label">Ubicación</label>
+      <select class="form-select" id="ubicacion_id" name="ubicacion_id" [(ngModel)]="mision.ubicacion_id" required>
+        <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion.id">
+          {{ ubicacion.departamento }}, {{ ubicacion.provincia }}, {{ ubicacion.distrito }}, {{ ubicacion.centro_poblado }}
         </option>
       </select>
     </div>
@@ -63,7 +80,49 @@
         </option>
       </select>
     </div>
+
+    <div class="mb-3">
+      <label for="tierra_id" class="form-label">Tierra</label>
+      <select class="form-select" id="tierra_id" name="tierra_id" [(ngModel)]="mision.tierra_id" required>
+        <option *ngFor="let tierra of tierras" [value]="tierra.id">{{ tierra.nombre }}</option>
+      </select>
+    </div>
     
+    <div class="mb-3">
+      <label for="clima_id" class="form-label">Clima</label>
+      <select class="form-select" id="clima_id" name="clima_id" [(ngModel)]="mision.clima_id" required>
+        <option *ngFor="let clima of climas" [value]="clima.id">{{ clima.nombre }}</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="observacion" class="form-label">Observación</label>
+      <textarea class="form-control" id="observacion" name="observacion" [(ngModel)]="mision.observacion" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="evidencia" class="form-label">Evidencias</label>
+      <input type="file" class="form-control" id="evidencia" (change)="onFileSelected($event)" accept="image/*,video/*">
+    </div>
+    
+    <div class="mb-3" *ngIf="evidencias.length > 0">
+      <h4>Evidencias subidas:</h4>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let evidencia of evidencias">
+          <div *ngIf="evidencia.tipo === 'imagen'">
+            <img [src]="evidencia.url" alt="Evidencia" style="max-width: 200px;">
+          </div>
+          <div *ngIf="evidencia.tipo === 'video'">
+            <video controls style="max-width: 200px;">
+              <source [src]="evidencia.url" type="video/mp4">
+              Tu navegador no soporta el tag de video.
+            </video>
+          </div>
+          <button class="btn btn-danger btn-sm" (click)="removeEvidencia(evidencia)">Eliminar</button>
+        </li>
+      </ul>
+    </div>
+
     <button type="submit" class="btn btn-primary">{{ id ? 'Actualizar' : 'Crear' }} Misión</button>
     <button type="button" class="btn btn-secondary ms-2" (click)="cancelar()">Cancelar</button>
   </form>

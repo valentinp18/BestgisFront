@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppConfig } from './app//app.confing';
 import { environment } from './environments/environment';
+import 'leaflet';
 
 if (environment.production) {
   enableProdMode();

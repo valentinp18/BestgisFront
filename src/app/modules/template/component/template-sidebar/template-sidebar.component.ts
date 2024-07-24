@@ -30,14 +30,15 @@ export class TemplateSidebarComponent implements OnInit {
           { name: "Drone", url: "mantenimiento/drone", icon: "fas fa-plane" },
           { name: "Producto", url: "mantenimiento/producto", icon: "fas fa-box" },
           { name: "Ubicación", url: "mantenimiento/ubicacion", icon: "fas fa-map-marker-alt" },
-          { name: "Campo Agricola", url: "mantenimiento/campo", icon: "fas fa-tractor" },
+          { name: "Tierra", url: "mantenimiento/tierra", icon: "fas fa-mountain" },
         ]
       },
       {
         name: "SERVICIO", target: "TargetInforme", icon: "fas fa-file-alt",
         subMenu: [
           { name: "Cliente", url: "servicio/cliente", icon: "fas fa-user-plus" },
-          { name: "Mision", url: "servicio/mision", icon: "fas fa-rocket" }
+          { name: "Mision", url: "servicio/mision", icon: "fas fa-rocket" },
+          { name: "Seguimiento", url: "servicio/seguimiento", icon: "fas fa-rocket" }
         ]
       },
       {

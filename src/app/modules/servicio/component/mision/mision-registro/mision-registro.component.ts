@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MisionService } from '../../../service/Mision.service';
+import { Observable, of, forkJoin, from } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+
+interface Evidencia {
+  tipo: 'imagen' | 'video';
+  url: string;
+}
 
 @Component({
   selector: 'app-mision-registro',
@@ -9,28 +16,40 @@ import { MisionService } from '../../../service/Mision.service';
 })
 export class MisionRegistroComponent implements OnInit {
   mision: any = {
+    ultimo_id: null,
     fecha: '',
     razon: '',
     observacion: '',
     cultivo_id: '',
-    campo_agricola_id: '',
+    etapa_cultivo: '',
+    ubicacion_id: '',
     producto_id: '',
     drone_id: '',
-    colaborador_id: ''
+    colaborador_id: '',
+    cliente_id: '',
+    tierra_id: '',
+    clima_id: '',
+    evidencias: []
   };
 
   id: string | null = null;
   isLoading: boolean = false;
 
   cultivos: any[] = [];
-  campos_agricolas: any[] = [];
+  etapasCultivo: string[] = [];
+  ubicaciones: any[] = [];
   productos: any[] = [];
   drones: any[] = [];
   colaboradores: any[] = [];
+  clientes: any[] = [];
+
+  tierras: any[] = [];
+  climas: any[] = [];
 
   razones: string[] = ['Control de Enfermedades', 'Prevención', 'Fertilización', 'Otros'];
   razonSeleccionada: string = '';
   razonPersonalizada: string = '';
+  evidencias: Evidencia[] = [];
 
   constructor(
     private misionService: MisionService,
@@ -47,8 +66,13 @@ export class MisionRegistroComponent implements OnInit {
   }
 
   loadOptions(): void {
-    this.misionService.getCultivos().subscribe(data => this.cultivos = data);
-    this.misionService.getCamposAgricolas().subscribe(data => this.campos_agricolas = data);
+    this.misionService.getCultivos().subscribe(data => {
+      this.cultivos = data;
+      if (this.mision.cultivo_id) {
+        this.actualizarEtapasCultivo();
+      }
+    });
+    this.misionService.getUbicaciones().subscribe(data => this.ubicaciones = data);
     this.misionService.getProductos().subscribe(data => this.productos = data);
     this.misionService.getDrones().subscribe(data => this.drones = data);
     this.misionService.getColaboradores().subscribe(data => {
@@ -60,6 +84,17 @@ export class MisionRegistroComponent implements OnInit {
         });
       });
     });
+    this.misionService.getClientes().subscribe(data => {
+      this.clientes = data;
+      this.clientes.forEach(cliente => {
+        this.misionService.getPersona(cliente.persona_id).subscribe(persona => {
+          cliente.nombre = persona.nombre;
+          cliente.apellido = persona.apellido;
+        });
+      });
+    });
+    this.misionService.getTierras().subscribe(data => this.tierras = data);
+    this.misionService.getClimas().subscribe(data => this.climas = data);
   }
 
   loadMision(id: string): void {
@@ -71,10 +106,11 @@ export class MisionRegistroComponent implements OnInit {
         if (this.razonSeleccionada === 'Otros') {
           this.razonPersonalizada = this.mision.razon;
         }
+        this.actualizarEtapasCultivo();
+        this.evidencias = this.mision.evidencias || [];
         this.isLoading = false;
       },
       error => {
-        console.error('Error al cargar la misión:', error);
         this.isLoading = false;
       }
     );
@@ -97,21 +133,148 @@ export class MisionRegistroComponent implements OnInit {
     if (this.razonSeleccionada === 'Otros') {
       this.mision.razon = this.razonPersonalizada;
     }
-
+  
+    const misionToSend = {
+      ...this.mision,
+      etapa_cultivo: this.mision.etapa_cultivo,
+    };
+  
+    if ('cultivo_etapa' in misionToSend) {
+      delete misionToSend.cultivo_etapa;
+    }
+  
     if (this.id) {
-      this.misionService.updateMision(this.id, this.mision)
-        .then(() => {
-          console.log('Misión actualizada con éxito');
-          this.navigateToList();
-        })
-        .catch(err => console.error('Error al actualizar misión:', err));
+      this.misionService.updateMision(this.id, misionToSend)
+        .pipe(
+          switchMap(() => {
+            if (this.id) {
+              return this.uploadEvidencias(this.id);
+            } else {
+              console.error('ID de misión no disponible');
+              return of(null);
+            }
+          })
+        )
+        .subscribe(
+          () => {
+            this.navigateToList();
+          },
+          err => {
+            console.error('Error al actualizar la misión:', err);
+          }
+        );
     } else {
-      this.misionService.createMision(this.mision)
-        .then(() => {
-          console.log('Misión creada con éxito');
-          this.navigateToList();
-        })
-        .catch(err => console.error('Error al crear misión:', err));
+      this.misionService.createMisionWithTracking(misionToSend)
+        .pipe(
+          switchMap(id => this.uploadEvidencias(id))
+        )
+        .subscribe(
+          () => {
+            this.navigateToList();
+          },
+          err => {
+            console.error('Error al crear la misión:', err);
+          }
+        );
+    }
+  }
+
+  private uploadEvidencias(misionId: string): Observable<any> {
+    if (this.evidencias.length === 0) {
+      return of(null);
+    }
+
+    const uploadObservables = this.evidencias.map(evidencia => {
+      if (evidencia.url.startsWith('data:')) {
+        return from(fetch(evidencia.url)
+          .then(res => res.blob())
+          .then(blob => {
+            const file = new File([blob], `evidencia.${evidencia.tipo === 'imagen' ? 'jpg' : 'mp4'}`, { type: blob.type });
+            return this.misionService.uploadEvidencia(misionId, file, evidencia.tipo).toPromise();
+          }));
+      } else {
+        return of(evidencia);
+      }
+    });
+
+    return forkJoin(uploadObservables);
+  }
+
+  deleteMision() {
+    if (this.id) {
+      this.misionService.deleteMision(this.id).subscribe(
+        () => {
+          this.router.navigate(['dashboard/servicio/mision']);
+        },
+        error => {
+          console.error('Error al eliminar la misión:', error);
+        }
+      );
+    }
+  }
+
+  actualizarEtapasCultivo(): void {
+    const cultivoSeleccionado = this.cultivos.find(c => c.id === this.mision.cultivo_id);
+    if (cultivoSeleccionado && cultivoSeleccionado.etapas) {
+      this.etapasCultivo = cultivoSeleccionado.etapas;
+    } else {
+      this.etapasCultivo = [];
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const tipo = file.type.startsWith('image/') ? 'imagen' : 'video';
+      
+      if (this.id) {
+        this.misionService.uploadEvidencia(this.id, file, tipo).subscribe(
+          evidencia => {
+            this.evidencias.push(evidencia);
+          },
+          error => {
+            console.error('Error al subir la evidencia:', error);
+          }
+        );
+      } else {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const evidencia: Evidencia = { tipo, url: e.target.result };
+          this.evidencias.push(evidencia);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+  removeEvidencia(evidencia: Evidencia) {
+    if (this.id) {
+      this.isLoading = true; 
+      this.misionService.removeEvidencia(this.id, evidencia).subscribe(
+        () => {
+          const index = this.evidencias.findIndex(e => e.url === evidencia.url);
+          if (index !== -1) {
+            this.evidencias.splice(index, 1);
+          }
+          this.isLoading = false; 
+        },
+        error => {
+          console.error('Error al eliminar la evidencia:', error);
+          this.isLoading = false; 
+        }
+      );
+    } else {
+      const index = this.evidencias.findIndex(e => e.url === evidencia.url);
+      if (index !== -1) {
+        this.evidencias.splice(index, 1);
+      }
+    }
+  }
+
+  onCultivoChange(): void {
+    this.actualizarEtapasCultivo();
+    if (!this.etapasCultivo.includes(this.mision.etapa_cultivo)) {
+      this.mision.etapa_cultivo = '';
     }
   }
 
