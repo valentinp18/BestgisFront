@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TemplateSidebarComponent implements OnInit {
   menu: any[] = [];
+  activeMenus: { [key: string]: boolean } = {};
 
   ngOnInit(): void {
     this.rellenarMenu();
+    this.initializeActiveMenus();
   }
 
   rellenarMenu() {
@@ -38,17 +40,30 @@ export class TemplateSidebarComponent implements OnInit {
         subMenu: [
           { name: "Cliente", url: "servicio/cliente", icon: "fas fa-user-plus" },
           { name: "Mision", url: "servicio/mision", icon: "fas fa-rocket" },
-          { name: "Seguimiento", url: "servicio/seguimiento", icon: "fas fa-rocket" }
+          { name: "Seguimiento", url: "servicio/seguimiento", icon: "fas fa-eye" }
         ]
       },
       {
-        name: "DATOS", target: "TargetInforme", icon: "fas fa-database",
+        name: "DATOS", target: "TargetDatos", icon: "fas fa-database",
         subMenu: [
           { name: "Informe", url: "datos/informe", icon: "fas fa-file-alt" },
-          { name: "Historial", url: "datos/historial", icon: "fas fa-history" },
           { name: "Analisis", url: "datos/analisis", icon: "fas fa-chart-line" }
         ]
       },
     ];
+  }
+
+  initializeActiveMenus() {
+    this.menu.forEach(item => {
+      this.activeMenus[item.target] = false;
+    });
+  }
+
+  toggleMenu(target: string) {
+    this.activeMenus[target] = !this.activeMenus[target];
+  }
+
+  isMenuActive(target: string): boolean {
+    return this.activeMenus[target];
   }
 }

@@ -181,19 +181,21 @@ export class MisionService {
   }
 
   deleteMision(id: string): Observable<void> {
-    return this.firestore.collection('misiones').doc(id).get().pipe(
+    const misionRef = this.firestore.collection('misiones').doc(id);
+    return misionRef.get().pipe(
       switchMap(doc => {
         if (doc.exists) {
           const mision = doc.data() as Mision;
           const evidencias = mision.evidencias || [];
 
-          const deleteEvidencias$ = evidencias.map(evidencia => 
+          const deleteEvidencias$ = evidencias.map(evidencia =>
             this.storage.refFromURL(evidencia.url).delete()
           );
- 
+
           return forkJoin([
             ...deleteEvidencias$,
-            this.firestore.collection('misiones').doc(id).delete()
+            misionRef.delete(),
+            this.seguimientoService.eliminarSeguimientosPorMision(id)
           ]);
         } else {
           return of(null);
@@ -202,7 +204,7 @@ export class MisionService {
       map(() => undefined),
       catchError(error => {
         console.error('Error al eliminar la misión:', error);
-        throw error; 
+        throw error;
       })
     );
   }
@@ -374,13 +376,15 @@ export class MisionService {
       switchMap(ultimoId => {
         const newMision: Mision = {
           ...mision,
-          ultimo_id: ultimoId,
+          ultimo_id: ultimoId
         };
         return from(this.firestore.collection('misiones').add(newMision)).pipe(
           switchMap(docRef => {
             const seguimiento: Seguimiento = {
               misionId: docRef.id,
-              fechaSeguimiento: new Date(),
+              ultimo_id: ultimoId, 
+              fechaSeguimiento: newMision.fecha,
+              fechaFinal: '', 
               estado: 'En progreso',
               observaciones: '',
               evidenciasAdicionales: [],
@@ -395,7 +399,6 @@ export class MisionService {
     );
   }
 
-
   getSeguimientosMision(misionId: string): Observable<Seguimiento[]> {
     return this.seguimientoService.getSeguimientos(misionId);
   }
@@ -403,5 +406,4 @@ export class MisionService {
   actualizarSeguimientoMision(seguimiento: Seguimiento): Observable<void> {
     return from(this.seguimientoService.actualizarSeguimiento(seguimiento));
   }
-
 }

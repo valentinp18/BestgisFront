@@ -1,0 +1,15 @@
+.estado-progreso, .estado-finalizado {
+    padding: 6px 10px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+  }
+  
+  .estado-progreso {
+    background-color: #007bff;
+  }
+  
+  .estado-finalizado {
+    background-color: #28a745;
+  }

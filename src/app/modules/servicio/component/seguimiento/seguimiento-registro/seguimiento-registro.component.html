@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>{{ isEditing ? 'Actualizar' : 'Agregar nuevo' }} seguimiento</h2>
+  <form (ngSubmit)="guardarSeguimiento()">
+    <div class="mb-3">
+      <label for="fechaSeguimiento" class="form-label">Fecha de Inicio</label>
+      <input type="date" class="form-control" id="fechaSeguimiento" [(ngModel)]="seguimiento.fechaSeguimiento" name="fechaSeguimiento" required [disabled]="isEditing">
+    </div>
+    <div class="mb-3">
+      <label for="fechaFinal" class="form-label">Fecha Final</label>
+      <input type="date" class="form-control" id="fechaFinal" [(ngModel)]="seguimiento.fechaFinal" name="fechaFinal" (change)="onFechaFinalChange()">
+    </div>
+    <div class="mb-3">
+      <label for="estado" class="form-label">Estado</label>
+      <select class="form-select" id="estado" [(ngModel)]="seguimiento.estado" name="estado" (change)="onEstadoChange()">
+        <option value="En progreso">En progreso</option>
+        <option value="Finalizado">Finalizado</option>
+      </select>
+    </div>
+    <div class="mb-3" *ngIf="seguimiento.estado === 'Finalizado'">
+      <label for="resultado" class="form-label">Resultado</label>
+      <select class="form-select" id="resultado" [(ngModel)]="seguimiento.resultado" name="resultado">
+        <option value="Éxito">Éxito</option>
+        <option value="Inconcluso">Inconcluso</option>
+        <option value="Daño">Daño</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="colaborador" class="form-label">Colaborador</label>
+      <select class="form-select" id="colaborador" [(ngModel)]="seguimiento.colaboradorId" name="colaborador">
+        <option *ngFor="let colaborador of colaboradores" [value]="colaborador.id">
+          {{colaborador.nombre}} {{colaborador.apellido}}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="observaciones" class="form-label">Observaciones</label>
+      <textarea class="form-control" id="observaciones" [(ngModel)]="seguimiento.observaciones" name="observaciones"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="evidencias" class="form-label">Evidencias Adicionales</label>
+      <input type="file" class="form-control" id="evidencias" (change)="onFileSelected($event)" accept="image/*,video/*">
+    </div>
+    <div class="mb-3">
+      <div *ngFor="let evidencia of evidencias" class="mb-2">
+        <img *ngIf="evidencia.tipo === 'imagen'" [src]="evidencia.url" alt="Evidencia" style="max-width: 200px;">
+        <video *ngIf="evidencia.tipo === 'video'" [src]="evidencia.url" controls style="max-width: 200px;"></video>
+        <button type="button" class="btn btn-danger btn-sm ms-2" (click)="removeEvidencia(evidencia)">Eliminar</button>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">{{ isEditing ? 'Actualizar' : 'Agregar' }} Seguimiento</button>
+    <button type="button" class="btn btn-secondary ms-2" [routerLink]="['/dashboard/servicio/seguimiento']">Cancelar</button>
+  </form>
+</div>

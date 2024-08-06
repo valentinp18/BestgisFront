@@ -3,16 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { SharedModule } from '../shared/shared.module';
 import { DatosRoutingModule } from './datos-routing.module';
-import { InformeListaComponent } from './component/informe/informe-lista/informe-lista.component';
-import { InformeRegistroComponent } from './component/informe/informe-registro/informe-registro.component';
+import { InformeComponent } from './component/informe/informe.component';
 
 
 
 
 @NgModule({
   declarations: [
-    InformeListaComponent,
-    InformeRegistroComponent
+    InformeComponent,
   ],
   imports: [
     CommonModule,

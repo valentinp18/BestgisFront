@@ -1,0 +1,59 @@
+.table-responsive {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+  }
+  
+  .table th, .table td {
+    white-space: nowrap;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 1;
+  }
+  
+  .card {
+    height: calc(100vh - 30px);
+  }
+  
+  .card-body {
+    padding: 0;
+  }
+
+  .resultado-badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+  .resultado-exito {
+    background-color: #28a745;
+    border: 1px solid #218838;
+  }
+  
+  .resultado-inconcluso {
+    background-color: #6c757d;
+    border: 1px solid #5a6268;
+  }
+  
+  .resultado-dano {
+    background-color: #dc3545;
+    border: 1px solid #c82333;
+  }
+  
+  .resultado-no-especificado {
+    background-color: #17a2b8;
+    border: 1px solid #138496;
+  }

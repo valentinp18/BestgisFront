@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MisionService } from '../../../service/Mision.service';
 import { Observable, of, forkJoin, from } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 interface Evidencia {
   tipo: 'imagen' | 'video';
@@ -17,7 +17,7 @@ interface Evidencia {
 export class MisionRegistroComponent implements OnInit {
   mision: any = {
     ultimo_id: null,
-    fecha: '',
+    fecha: '', 
     razon: '',
     observacion: '',
     cultivo_id: '',
@@ -62,6 +62,8 @@ export class MisionRegistroComponent implements OnInit {
     this.loadOptions();
     if (this.id) {
       this.loadMision(this.id);
+    }else {
+      this.mision.fecha = new Date().toISOString().split('T')[0];
     }
   }
 

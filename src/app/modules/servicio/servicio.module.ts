@@ -7,10 +7,8 @@ import { ClienteListaComponent } from './component/cliente/cliente-lista/cliente
 import { ClienteRegistroComponent } from './component/cliente/cliente-registro/cliente-registro.component';
 import { MisionListaComponent } from './component/mision/mision-lista/mision-lista.component';
 import { MisionRegistroComponent } from './component/mision/mision-registro/mision-registro.component';
-import { SeguimientoComponent } from './component/seguimiento/seguimiento/seguimiento.component';
-
-
-
+import { SeguimientoListaComponent } from './component/seguimiento/seguimiento-lista/seguimiento-lista.component';
+import { SeguimientoRegistroComponent } from './component/seguimiento/seguimiento-registro/seguimiento-registro.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +16,8 @@ import { SeguimientoComponent } from './component/seguimiento/seguimiento/seguim
     ClienteRegistroComponent,
     MisionListaComponent,
     MisionRegistroComponent,
-    SeguimientoComponent
+    SeguimientoListaComponent,
+    SeguimientoRegistroComponent
 
   ],
   imports: [

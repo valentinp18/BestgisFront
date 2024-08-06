@@ -4,7 +4,9 @@ import { ClienteListaComponent } from './component/cliente/cliente-lista/cliente
 import { ClienteRegistroComponent } from './component/cliente/cliente-registro/cliente-registro.component';
 import { MisionListaComponent } from './component/mision/mision-lista/mision-lista.component';
 import { MisionRegistroComponent } from './component/mision/mision-registro/mision-registro.component';
-import { SeguimientoComponent } from './component/seguimiento/seguimiento/seguimiento.component';
+import { SeguimientoListaComponent } from './component/seguimiento/seguimiento-lista/seguimiento-lista.component';
+import { SeguimientoRegistroComponent } from './component/seguimiento/seguimiento-registro/seguimiento-registro.component';
+
 
 const routes: Routes = [
   { path: 'cliente', component: ClienteListaComponent },
@@ -13,7 +15,11 @@ const routes: Routes = [
   { path: 'mision', component: MisionListaComponent },
   { path: 'mision/registro', component: MisionRegistroComponent },
   { path: 'mision/registro/:id', component: MisionRegistroComponent },
-  { path: 'seguimiento', component: SeguimientoComponent },
+  { path: 'seguimiento', component: SeguimientoListaComponent },
+  { path: 'seguimiento/registro', component: SeguimientoRegistroComponent },
+  { path: 'seguimiento/registro/:id', component: SeguimientoRegistroComponent },
+
+  
 ];
 
 @NgModule({
