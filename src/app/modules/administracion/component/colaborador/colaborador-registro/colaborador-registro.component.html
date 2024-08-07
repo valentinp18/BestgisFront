@@ -53,6 +53,14 @@
         <label for="direccion" class="form-label">Dirección</label>
         <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="colaborador.direccion" required>
       </div>
+
+      <div class="mb-3">
+        <label for="rol" class="form-label">Rol</label>
+        <select class="form-select" id="rol" name="rol" [(ngModel)]="colaborador.rol" required>
+          <option value="administrador">Administrador</option>
+          <option value="ususario">Usuario</option>
+        </select>
+      </div>
   
       <div class="mb-3">
         <button type="submit" class="btn btn-primary me-2" [disabled]="!colaboradorForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>

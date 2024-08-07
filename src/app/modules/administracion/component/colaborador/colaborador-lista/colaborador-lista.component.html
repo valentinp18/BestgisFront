@@ -14,6 +14,7 @@
           <th>Fecha Nacimiento</th>
           <th>Teléfono</th>
           <th>Dirección</th>
+          <th>Rol</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -28,6 +29,7 @@
           <td>{{ colaborador.fecha_nacimiento }}</td>
           <td>{{ colaborador.telefono }}</td>
           <td>{{ colaborador.direccion }}</td>
+          <td>{{ colaborador.rol}}</td>
           <td>
             <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', colaborador.id]">Editar</button>
             <button class="btn btn-sm btn-danger" (click)="deleteColaborador(colaborador.id)">Eliminar</button>

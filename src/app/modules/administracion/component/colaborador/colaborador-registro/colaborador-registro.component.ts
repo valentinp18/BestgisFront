@@ -1,4 +1,3 @@
-// colaborador-registro.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColaboradorService } from '../../../service/Colaborador.service';
@@ -18,7 +17,8 @@ export class ColaboradorRegistroComponent implements OnInit {
     sexo: '',
     fecha_nacimiento: '',
     telefono: '',
-    direccion: ''
+    direccion: '',
+    rol: ''
   };
   id: string | null = null;
   isLoading: boolean = false;
@@ -74,6 +74,7 @@ export class ColaboradorRegistroComponent implements OnInit {
         .catch(err => console.error('Error al crear colaborador:', err));
     }
   }
+
 
   cancelar(): void {
     this.navigateToList();

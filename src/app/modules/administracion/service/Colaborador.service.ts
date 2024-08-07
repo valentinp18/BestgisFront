@@ -7,6 +7,7 @@ interface Colaborador {
   id?: string;
   correo: string;
   persona_id: string;
+  rol: string;
   [key: string]: any;
 }
 
@@ -62,7 +63,8 @@ export class ColaboradorService {
       .then(personaRef => {
         const colaboradorData: Colaborador = {
           correo: colaborador.correo,
-          persona_id: personaRef.id
+          persona_id: personaRef.id,
+          rol: colaborador.rol 
         };
         return this.firestore.collection('colaboradores').add(colaboradorData);
       });
@@ -89,7 +91,8 @@ export class ColaboradorService {
       })
       .then(() => {
         return this.firestore.collection('colaboradores').doc(id).update({
-          correo: colaborador.correo
+          correo: colaborador.correo,
+          rol: colaborador.rol
         });
       });
   }

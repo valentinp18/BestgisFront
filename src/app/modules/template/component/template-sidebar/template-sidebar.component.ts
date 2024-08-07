@@ -19,9 +19,8 @@ export class TemplateSidebarComponent implements OnInit {
       {
         name: "ADMINISTRACION", target: "TargetAdministracion", icon: "fas fa-pencil-alt",
         subMenu: [
-          { name: "Rol", url: "administracion/rol", icon: "fas fa-user-tag" },
-          { name: "Usuario", url: "administracion/usuario", icon: "fas fa-user" },
-          { name: "Colaborador", url: "administracion/colaborador", icon: "fas fa-users" }
+          { name: "Colaborador", url: "administracion/colaborador", icon: "fas fa-users" },
+          { name: "Usuario", url: "administracion/usuario", icon: "fas fa-user" }
         ]
       },
       {

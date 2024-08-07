@@ -1,47 +1,27 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cerrarModal(false)">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <form [formGroup]="myForm">
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Usuario</label>
-                <input formControlName="username" type="text" class="form-control" placeholder="Ingrese su usuario">
-            </div>
-            <div *ngIf="myForm.get('estado')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('estado')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Contraseña</label>
-                <input formControlName="password" type="text" class="form-control" placeholder="Ingrese su contraseña">
-            </div>
-            <div *ngIf="myForm.get('estado')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('estado')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="form-group">
-                <label for="">Colaborador</label>
-                <input formControlName="idColaborador" type="text" class="form-control" placeholder="Ingrese el id del Colaborador">
-            </div>
-            <div *ngIf="myForm.get('estado')?.errors &&  myForm.touched ">
-                <small class="text-danger" *ngIf="myForm.get('estado')?.hasError('required')"> Campo requerido</small>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button [disabled]="myForm.invalid" (click)="guardar()" class="btn-block btn btn-primary btn-sm">GUARDAR</button>
-            </div>
-        </div>
-        <div class="col-6 mt-3">
-            <div class="d-grid gap-2">
-                <button (click)="cerrarModal(false)" class="btn-block btn btn-danger btn-sm">CANCELAR</button>
-            </div>
-        </div>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} USUARIO</h2>
+  
+    <form (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
+      <div class="mb-3">
+        <label for="colaborador_id" class="form-label">Colaborador</label>
+        <select class="form-select" id="colaborador_id" name="colaborador_id" [(ngModel)]="usuario.colaborador_id" required>
+          <option *ngFor="let colaborador of colaboradores" [value]="colaborador.id">
+            {{ colaborador.nombre }} {{ colaborador.apellido }} - {{ colaborador.correo }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <select class="form-select" id="estado" name="estado" [(ngModel)]="usuario.estado" required>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="!usuarioForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
     </form>
-</div>
+  </div>
