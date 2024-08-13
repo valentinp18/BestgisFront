@@ -1,27 +1,33 @@
 <div class="container mt-4">
-    <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} USUARIO</h2>
+  <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} USUARIO</h2>
   
-    <form (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
-      <div class="mb-3">
-        <label for="colaborador_id" class="form-label">Colaborador</label>
-        <select class="form-select" id="colaborador_id" name="colaborador_id" [(ngModel)]="usuario.colaborador_id" required>
-          <option *ngFor="let colaborador of colaboradores" [value]="colaborador.id">
-            {{ colaborador.nombre }} {{ colaborador.apellido }} - {{ colaborador.correo }}
-          </option>
-        </select>
-      </div>
-  
-      <div class="mb-3">
-        <label for="estado" class="form-label">Estado</label>
-        <select class="form-select" id="estado" name="estado" [(ngModel)]="usuario.estado" required>
-          <option value="activo">Activo</option>
-          <option value="inactivo">Inactivo</option>
-        </select>
-      </div>
-  
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary me-2" [disabled]="!usuarioForm.form.valid">{{ id ? 'Actualizar' : 'Crear' }}</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+  <div *ngIf="isLoading" class="alert alert-info">Cargando...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <form (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
+    <div class="mb-3">
+      <label for="colaborador_id" class="form-label">Colaborador</label>
+      <select class="form-select" id="colaborador_id" name="colaborador_id" [(ngModel)]="usuario.colaborador_id" required>
+        <option *ngFor="let colaborador of colaboradoresSinCuenta" [value]="colaborador.id">
+          {{ colaborador.nombre }} {{ colaborador.apellido }} - {{ colaborador.correo }}
+        </option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="estado" class="form-label">Estado</label>
+      <select class="form-select" id="estado" name="estado" [(ngModel)]="usuario.estado" required>
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="!usuarioForm.form.valid || isLoading">
+        {{ id ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()" [disabled]="isLoading">Cancelar</button>
+    </div>
+  </form>
+</div>

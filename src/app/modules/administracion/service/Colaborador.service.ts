@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable, from, of } from 'rxjs';
+import { map, switchMap, finalize } from 'rxjs/operators';
 
 interface Colaborador {
   id?: string;
@@ -27,7 +28,10 @@ interface Persona {
   providedIn: 'root'
 })
 export class ColaboradorService {
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {}
 
   getColaboradores(): Observable<any[]> {
     return this.firestore.collection<Colaborador>('colaboradores').snapshotChanges().pipe(

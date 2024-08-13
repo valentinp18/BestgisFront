@@ -1,0 +1,46 @@
+<div class="profile-container">
+  <h2 class="profile-title">Perfil de Usuario</h2>
+  
+  <ng-container *ngIf="profileData$ | async as profile; else loadingOrError">
+    <div *ngIf="profile" class="profile-content">
+      <div class="profile-image-section">
+        <div class="profile-image-container">
+          <img [src]="profile.photoURL || defaultAvatarUrl" alt="Profile Photo" class="profile-image">
+          <div class="profile-image-overlay">
+            <label for="photo-upload" class="photo-upload-label">
+              <i class="fas fa-camera"></i> Cambiar foto
+            </label>
+            <input id="photo-upload" type="file" (change)="updatePhoto($event)" accept="image/*" class="photo-upload-input">
+            <button *ngIf="profile.photoURL" (click)="deletePhoto()" class="delete-photo-btn">
+              <i class="fas fa-trash"></i> Eliminar foto
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="profile-info-section">
+        <div class="profile-info-item">
+          <span class="profile-info-label">Nombre</span>
+          <span class="profile-info-value">{{ profile.nombre }}</span>
+        </div>
+        <div class="profile-info-item">
+          <span class="profile-info-label">Apellido</span>
+          <span class="profile-info-value">{{ profile.apellido }}</span>
+        </div>
+        <div class="profile-info-item">
+          <span class="profile-info-label">Email</span>
+          <span class="profile-info-value">{{ profile.email }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  
+  <ng-template #loadingOrError>
+    <div *ngIf="loading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i> Cargando datos del perfil...
+    </div>
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+  </ng-template>
+</div>

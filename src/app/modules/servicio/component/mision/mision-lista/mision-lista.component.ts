@@ -12,7 +12,6 @@ import { BehaviorSubject } from 'rxjs';
 export class MisionListaComponent implements OnInit {
   misiones: any[] = [];
   misionesFiltradas: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  showModal: boolean = false;
   filtroBusqueda: string = '';
 
   paginaActual: number = 1;
@@ -82,12 +81,15 @@ export class MisionListaComponent implements OnInit {
   }
 
   deleteMision(id: string): void {
-    this.misionService.deleteMision(id).subscribe(
-      () => {
-        this.getMisiones();
-      },
-      (err: any) => console.error('Error al eliminar misión:', err)
-    );
+    if (confirm('¿Estás seguro de que deseas eliminar esta misión?')) {
+      this.misionService.deleteMision(id).subscribe(
+        () => {
+          console.log('Misión eliminada');
+          this.getMisiones();
+        },
+        (err: any) => console.error('Error al eliminar misión:', err)
+      );
+    }
   }
 
   verSeguimiento(mision: any) {

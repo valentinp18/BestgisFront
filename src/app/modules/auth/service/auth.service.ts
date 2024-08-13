@@ -38,4 +38,8 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!sessionStorage.getItem('token');
   }
+
+  getCurrentUser(): Observable<any> {
+    return this.afAuth.authState;
+  }
 }

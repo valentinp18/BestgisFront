@@ -13,9 +13,11 @@ export class UsuarioRegistroComponent implements OnInit {
     colaborador_id: '',
     estado: 'activo'
   };
-  colaboradores: any[] = [];
+  colaboradoresSinCuenta: any[] = [];
   id: string | null = null;
   isLoading: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
     private usuarioService: UsuarioService,
@@ -29,7 +31,7 @@ export class UsuarioRegistroComponent implements OnInit {
     if (this.id) {
       this.loadUsuario(this.id);
     }
-    this.loadColaboradores();
+    this.loadColaboradoresSinCuenta();
   }
 
   loadUsuario(id: string): void {
@@ -41,37 +43,62 @@ export class UsuarioRegistroComponent implements OnInit {
       },
       error => {
         console.error('Error al cargar el usuario:', error);
+        this.errorMessage = 'Error al cargar el usuario. Por favor, intente de nuevo.';
         this.isLoading = false;
       }
     );
   }
 
-  loadColaboradores(): void {
+  loadColaboradoresSinCuenta(): void {
+    this.isLoading = true;
     this.colaboradorService.getColaboradores().subscribe(
-      data => {
-        this.colaboradores = data;
+      async data => {
+        this.colaboradoresSinCuenta = [];
+        for (let colaborador of data) {
+          const tieneCuenta = await this.usuarioService.colaboradorTieneUsuario(colaborador.id);
+          if (!tieneCuenta) {
+            this.colaboradoresSinCuenta.push(colaborador);
+          }
+        }
+        this.isLoading = false;
       },
       error => {
         console.error('Error al cargar colaboradores:', error);
+        this.errorMessage = 'Error al cargar colaboradores. Por favor, intente de nuevo.';
+        this.isLoading = false;
       }
     );
   }
 
   onSubmit(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
     if (this.id) {
       this.usuarioService.updateUsuario(this.id, this.usuario)
         .then(() => {
-          console.log('Usuario actualizado con éxito');
-          this.navigateToList();
+          this.successMessage = 'Usuario actualizado con éxito';
+          this.isLoading = false;
+          setTimeout(() => this.navigateToList(), 2000);
         })
-        .catch(err => console.error('Error al actualizar usuario:', err));
+        .catch(err => {
+          console.error('Error al actualizar usuario:', err);
+          this.errorMessage = 'Error al actualizar usuario: ' + err.message;
+          this.isLoading = false;
+        });
     } else {
       this.usuarioService.createUsuario(this.usuario)
         .then(() => {
-          console.log('Usuario creado con éxito');
-          this.navigateToList();
+          this.successMessage = 'Usuario creado con éxito';
+          this.isLoading = false;
+          setTimeout(() => this.navigateToList(), 2000);
         })
-        .catch(err => console.error('Error al crear usuario:', err));
+        .catch(err => {
+          console.error('Error al crear usuario:', err);
+          this.errorMessage = 'Error al crear usuario: ' + err.message;
+          this.isLoading = false;
+        });
     }
   }
 

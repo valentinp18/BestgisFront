@@ -1,38 +1,58 @@
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <div class="d-flex mb-3">
     <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Cultivo</button>
   </div>
-  <table class="table table-striped table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th>Nombre</th>
-        <th>Tipo</th>
-        <th>Etapas</th>
-        <th>Descripción</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cultivo of cultivos">
-        <td>{{ cultivo.nombre }}</td>
-        <td>{{ cultivo.tipo }}</td>
-        <td>
-          <span *ngIf="cultivo.etapas && cultivo.etapas.length > 0">
-            {{ cultivo.etapas.join(', ') }}
-          </span>
-          <span *ngIf="!cultivo.etapas && cultivo.etapa">
-            {{ cultivo.etapa }}
-          </span>
-          <span *ngIf="(!cultivo.etapas || cultivo.etapas.length === 0) && !cultivo.etapa">
-            Sin etapas
-          </span>
-        </td>
-        <td>{{ cultivo.descripcion }}</td>
-        <td>
-          <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', cultivo.id]">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteCultivo(cultivo.id)">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th class="d-none d-md-table-cell">Tipo</th>
+          <th class="d-none d-lg-table-cell">Etapas</th>
+          <th class="d-none d-xl-table-cell">Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cultivo of cultivos">
+          <td>{{ cultivo.nombre }}</td>
+          <td class="d-none d-md-table-cell">{{ cultivo.tipo }}</td>
+          <td class="d-none d-lg-table-cell">
+            <span *ngIf="cultivo.etapas && cultivo.etapas.length > 0">
+              {{ cultivo.etapas.join(', ') }}
+            </span>
+            <span *ngIf="!cultivo.etapas && cultivo.etapa">
+              {{ cultivo.etapa }}
+            </span>
+            <span *ngIf="(!cultivo.etapas || cultivo.etapas.length === 0) && !cultivo.etapa">
+              Sin etapas
+            </span>
+          </td>
+          <td class="d-none d-xl-table-cell">{{ cultivo.descripcion }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2 mb-1 mb-md-0" [routerLink]="['registro', cultivo.id]">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="openDeleteModal(cultivo.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Confirmación -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que deseas eliminar este registro?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

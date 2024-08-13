@@ -1,6 +1,6 @@
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <div class="row mb-4">
-    <div class="col-md-6 d-flex align-items-center">
+    <div class="col-md-6 mb-3 mb-md-0">
       <label for="filtroEstado" class="me-2">Filtrar por estado:</label>
       <select id="filtroEstado" class="form-select d-inline-block w-auto" [(ngModel)]="filtroEstado" (change)="cambiarFiltro(filtroEstado)">
         <option value="Todos">Todos</option>
@@ -8,8 +8,8 @@
         <option value="Finalizado">Completado</option>
       </select>
     </div>
-    <div class="col-md-6 d-flex align-items-center">
-      <label for="buscarIdMision" class="me-2">Buscar por el ID de la Misión:</label>
+    <div class="col-md-6">
+      <label for="buscarIdMision" class="me-2">Buscar por ID de Misión:</label>
       <input type="number" id="buscarIdMision" class="form-control d-inline-block w-auto" [(ngModel)]="filtroBusqueda" (input)="buscarPorIdMision()">
     </div>    
   </div>
@@ -20,11 +20,11 @@
         <tr>
           <th>ID Misión</th>
           <th>Fecha Inicio</th>
-          <th>Resultado</th>
-          <th>Observaciones</th>
-          <th>Evidencias del Seguimiento</th>
-          <th>Fecha Final</th>
-          <th>Colaborador Seguimiento</th>
+          <th class="d-none d-md-table-cell">Resultado</th>
+          <th class="d-none d-lg-table-cell">Observaciones</th>
+          <th class="d-none d-xl-table-cell">Evidencias</th>
+          <th class="d-none d-lg-table-cell">Fecha Final</th>
+          <th class="d-none d-md-table-cell">Colaborador</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
@@ -34,7 +34,7 @@
           <tr *ngFor="let seguimiento of obtenerSeguimientosPaginados()">
             <td>{{ seguimiento.ultimo_id }}</td>
             <td>{{ parseFecha(seguimiento.fechaSeguimiento) | date:'dd/MM/yyyy':'UTC' }}</td>
-            <td>
+            <td class="d-none d-md-table-cell">
               <ng-container *ngIf="seguimiento.estado === 'Finalizado'; else enProgreso">
                 {{ seguimiento.resultado || 'No especificado' }}
               </ng-container>
@@ -42,26 +42,26 @@
                 En progreso
               </ng-template>
             </td>
-            <td>{{ seguimiento.observaciones }}</td>
-            <td>
+            <td class="d-none d-lg-table-cell">{{ seguimiento.observaciones }}</td>
+            <td class="d-none d-xl-table-cell">
               <ng-container *ngIf="seguimiento.evidenciasAdicionales && seguimiento.evidenciasAdicionales.length > 0; else noEvidencias">
                 <div *ngFor="let evidencia of seguimiento.evidenciasAdicionales">
                   <a [href]="evidencia" target="_blank">Ver evidencia</a>
                 </div>
               </ng-container>
               <ng-template #noEvidencias>
-                No hay evidencias adicionales
+                No hay evidencias
               </ng-template>
             </td>
-            <td>{{ seguimiento.fechaFinal ? (seguimiento.fechaFinal | date:'dd/MM/yyyy') : 'No especificada' }}</td>
-            <td>{{ seguimiento.colaboradorNombre }}</td>
+            <td class="d-none d-lg-table-cell">{{ seguimiento.fechaFinal ? (seguimiento.fechaFinal | date:'dd/MM/yyyy') : 'No especificada' }}</td>
+            <td class="d-none d-md-table-cell">{{ seguimiento.colaboradorNombre }}</td>
             <td>
               <span [ngClass]="{'estado-progreso': seguimiento.estado === 'En progreso', 'estado-finalizado': seguimiento.estado === 'Finalizado'}">
                 {{ seguimiento.estado }}
               </span>
             </td>
             <td>
-              <button class="btn btn-sm btn-warning me-2" (click)="actualizarSeguimiento(seguimiento)">Actualizar</button>
+              <button class="btn btn-sm btn-warning" (click)="actualizarSeguimiento(seguimiento)">Actualizar</button>
             </td>
           </tr>
           <tr *ngIf="obtenerSeguimientosPaginados().length === 0">
@@ -74,7 +74,7 @@
 
   <!-- Paginación -->
   <nav *ngIf="seguimientosFiltrados$ | async as seguimientosFiltrados">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination justify-content-center flex-wrap">
       <li class="page-item" [class.disabled]="paginaActual === 1">
         <a class="page-link" (click)="cambiarPagina(paginaActual - 1)" aria-label="Anterior">
           <span aria-hidden="true">&laquo;</span>

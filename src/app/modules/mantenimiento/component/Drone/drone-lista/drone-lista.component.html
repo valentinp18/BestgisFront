@@ -1,31 +1,50 @@
-<div class="container mt-4">
-    <div class="d-flex mb-3">
-      <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Drone</button>
-    </div>
+<div class="container-fluid mt-4">
+  <div class="d-flex mb-3">
+    <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Drone</button>
+  </div>
+  <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
           <th>Modelo</th>
-          <th>Tipo</th>
-          <th>Capacidad</th>
-          <th>Descripción</th>
-          <th>Mantenimiento</th>
+          <th class="d-none d-md-table-cell">Tipo</th>
+          <th class="d-none d-lg-table-cell">Capacidad</th>
+          <th class="d-none d-xl-table-cell">Descripción</th>
+          <th class="d-none d-xl-table-cell">Mantenimiento</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let drone of drones">
           <td>{{ drone.modelo }}</td>
-          <td>{{ drone.tipo }}</td>
-          <td>{{ drone.capacidad }}</td>
-          <td>{{ drone.descripcion }}</td>
-          <td>{{ drone.mantenimiento }}</td>
+          <td class="d-none d-md-table-cell">{{ drone.tipo }}</td>
+          <td class="d-none d-lg-table-cell">{{ drone.capacidad }}</td>
+          <td class="d-none d-xl-table-cell">{{ drone.descripcion }}</td>
+          <td class="d-none d-xl-table-cell">{{ drone.mantenimiento }}</td>
           <td>
-            <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', drone.id]">Editar</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteDrone(drone.id)">Eliminar</button>
+            <button class="btn btn-sm btn-warning me-2 mb-1 mb-md-0" [routerLink]="['registro', drone.id]">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="openDeleteModal(drone.id)">Eliminar</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  
+
+  <!-- Confirmación -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que deseas eliminar este registro?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

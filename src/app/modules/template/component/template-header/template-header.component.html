@@ -1,35 +1,48 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background: linear-gradient(to bottom, #467fb8, #3d6bcf);">
     <!-- Navbar Brand with Logo -->
     <a class="navbar-brand ps-3" href="index.html" style="font-size: 24px;">
-     BESTGIS
+        BESTGIS
     </a>
+    
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
         <i class="fas fa-bars"></i>
     </button>
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control border-0" type="text" placeholder="Buscar..." aria-label="Buscar..."
-                aria-describedby="btnNavbarSearch" style="background: rgba(255, 255, 255, 0.8); color: black; font-size: 18px;">
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button" style="background: transparent; border: none;">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>
-    <!-- Navbar-->
+    
+    <!-- Spacer to push the following content to the right -->
+    <div class="flex-grow-1"></div>
+    
+    <!-- User Profile Dropdown -->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img [src]="userPhotoUrl || defaultAvatarUrl" alt="User Photo" class="user-photo me-2">
+                <span class="user-name">{{ userName }}</span>
+            </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Configuración</a></li>
-                <li><a class="dropdown-item" href="#!">Actividad Historica</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#!">Cerrar Sesión</a></li>
+                <li><button class="dropdown-item" (click)="goToProfile()">Perfil</button></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Cerrar Sesión</button></li>
             </ul>
         </li>
     </ul>
 </nav>
+
+<!-- Modal de confirmación para cerrar sesión -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Confirmar cierre de sesión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que quieres cerrar sesión?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmLogout()">Cerrar sesión</button>
+            </div>
+        </div>
+    </div>
+</div>
