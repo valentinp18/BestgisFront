@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/drone",
+    "public": "dist/drone/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

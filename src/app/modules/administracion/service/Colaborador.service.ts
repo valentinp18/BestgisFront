@@ -126,7 +126,12 @@ export class ColaboradorService {
         return this.firestore.collection('personas').doc<Persona>(data.persona_id).get().pipe(
           map(personaDoc => {
             const personaData = personaDoc.data() as Persona | undefined;
-            return { id, correo: data.correo, ...personaData };
+            return { 
+              id, 
+              correo: data.correo, 
+              rol: data.rol, 
+              ...personaData 
+            };
           })
         );
       })

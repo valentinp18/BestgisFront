@@ -10,8 +10,8 @@
             <label for="photo-upload" class="photo-upload-label">
               <i class="fas fa-camera"></i> Cambiar foto
             </label>
-            <input id="photo-upload" type="file" (change)="updatePhoto($event)" accept="image/*" class="photo-upload-input">
-            <button *ngIf="profile.photoURL" (click)="deletePhoto()" class="delete-photo-btn">
+            <input id="photo-upload" type="file" (change)="uploadProfileImage($event)" accept="image/*" class="photo-upload-input">
+            <button *ngIf="profile.photoURL" (click)="deleteProfileImage()" class="delete-photo-btn">
               <i class="fas fa-trash"></i> Eliminar foto
             </button>
           </div>

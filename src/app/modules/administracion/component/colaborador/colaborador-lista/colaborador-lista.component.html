@@ -1,19 +1,20 @@
-<div class="container mt-4">
-    <div class="d-flex mb-3">
-      <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Colaborador</button>
-    </div>
+<div class="container-fluid mt-4">
+  <div class="d-flex mb-3">
+    <button class="btn btn-primary ms-auto" [routerLink]="['registro']">Nuevo Colaborador</button>
+  </div>
+  <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
           <th>Correo</th>
           <th>Nombre</th>
           <th>Apellido</th>
-          <th>Tipo Documento</th>
-          <th>Número Documento</th>
-          <th>Sexo</th>
-          <th>Fecha Nacimiento</th>
-          <th>Teléfono</th>
-          <th>Dirección</th>
+          <th class="d-none d-md-table-cell">Tipo Documento</th>
+          <th class="d-none d-md-table-cell">Número Documento</th>
+          <th class="d-none d-lg-table-cell">Sexo</th>
+          <th class="d-none d-lg-table-cell">Fecha Nacimiento</th>
+          <th class="d-none d-xl-table-cell">Teléfono</th>
+          <th class="d-none d-xl-table-cell">Dirección</th>
           <th>Rol</th>
           <th>Acciones</th>
         </tr>
@@ -23,18 +24,40 @@
           <td>{{ colaborador.correo }}</td>
           <td>{{ colaborador.nombre }}</td>
           <td>{{ colaborador.apellido }}</td>
-          <td>{{ colaborador.tipo_documento }}</td>
-          <td>{{ colaborador.numero_documento }}</td>
-          <td>{{ colaborador.sexo }}</td>
-          <td>{{ colaborador.fecha_nacimiento }}</td>
-          <td>{{ colaborador.telefono }}</td>
-          <td>{{ colaborador.direccion }}</td>
-          <td>{{ colaborador.rol}}</td>
+          <td class="d-none d-md-table-cell">{{ colaborador.tipo_documento }}</td>
+          <td class="d-none d-md-table-cell">{{ colaborador.numero_documento }}</td>
+          <td class="d-none d-lg-table-cell">{{ colaborador.sexo }}</td>
+          <td class="d-none d-lg-table-cell">{{ colaborador.fecha_nacimiento }}</td>
+          <td class="d-none d-xl-table-cell">{{ colaborador.telefono }}</td>
+          <td class="d-none d-xl-table-cell">{{ colaborador.direccion }}</td>
+          <td>{{ colaborador.rol }}</td>
           <td>
             <button class="btn btn-sm btn-warning me-2" [routerLink]="['registro', colaborador.id]">Editar</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteColaborador(colaborador.id)">Eliminar</button>
+            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarEliminacionModal" (click)="confirmarEliminacion(colaborador)">Eliminar</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+<!-- Modal de confirmación (sin cambios) -->
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmarEliminacionModal" tabindex="-1" aria-labelledby="confirmarEliminacionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarEliminacionModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="colaboradorAEliminar">
+        ¿Está seguro que desea eliminar al colaborador {{ colaboradorAEliminar.nombre }} {{ colaboradorAEliminar.apellido }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="eliminarColaborador()" data-bs-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import { ColaboradorService } from '../../../service/Colaborador.service';
 })
 export class ColaboradorListaComponent implements OnInit {
   colaboradores: any[] = [];
+  colaboradorAEliminar: any = null;
 
   constructor(private colaboradorService: ColaboradorService) {}
 
@@ -21,9 +22,19 @@ export class ColaboradorListaComponent implements OnInit {
     });
   }
 
-  deleteColaborador(id: string): void {
-    this.colaboradorService.deleteColaborador(id)
-      .then(() => console.log('Colaborador eliminado'))
-      .catch(err => console.log(err));
+  confirmarEliminacion(colaborador: any): void {
+    this.colaboradorAEliminar = colaborador;
+  }
+
+  eliminarColaborador(): void {
+    if (this.colaboradorAEliminar) {
+      this.colaboradorService.deleteColaborador(this.colaboradorAEliminar.id)
+        .then(() => {
+          console.log('Colaborador eliminado');
+          this.getColaboradores();
+          this.colaboradorAEliminar = null;
+        })
+        .catch(err => console.log(err));
+    }
   }
 }

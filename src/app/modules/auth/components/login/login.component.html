@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="./login.component.scss" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://raw.githubusercontent.com/valentinp18/imagenesBest/main/fondog.png');
+            background-image: url('https://raw.githubusercontent.com/valentinp18/imagenesBest/main/fondoLog2c.jpg');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -21,39 +22,75 @@
 </head>
 <body>
     <div class="container">
-        <div class="grid-container">
-            <div class="image-container">
-                <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/dron1.png" alt="Imagen en movimiento" class="movimiento">
-            </div>
-            <div class="form-container">
-                <form [formGroup]="loginForm" class="card shadow-lg p-4 my-5">
-                    <h2 class="text-center mb-4">Iniciar sesión</h2>
-                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"></div>
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <input formControlName="email" type="email" id="form3Example3"
-                            class="form-control form-control-lg" placeholder="Ingrese su usuario" />
-                        <label class="form-label" for="form3Example3">Usuario</label>
-                    </div>
-                    <!-- Password input -->
-                    <div class="form-outline mb-3">
+        <div class="form-container">
+            <form [formGroup]="loginForm" *ngIf="!showResetPassword" class="card shadow-lg p-4">
+                <div class="text-center mb-4">
+                    <h2 class="title">Iniciar sesión</h2>
+                    <p class="subtitle">Solo colaboradores de Bestgis</p>
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/logo.png" alt="Logo Bestgis" class="logo-img">
+                </div>
+                <!-- Email input -->
+                <div class="form-outline mb-4 position-relative">
+                    <i class="fas fa-user icon"></i>
+                    <input formControlName="email" type="email" id="form3Example3"
+                        class="form-control form-control-lg pl-4" placeholder="Usuario" />
+                </div>
+                <!-- Password input -->
+                <div class="form-outline mb-3 password-container position-relative">
+                    <i class="fas fa-lock icon"></i>
+                    <div class="password-wrapper">
                         <input formControlName="password" type="password" id="form3Example4"
-                            class="form-control form-control-lg" placeholder="Ingrese su contraseña"  />
-                        <label class="form-label" for="form3Example4">Contraseña</label>
+                            class="form-control form-control-lg pl-4" placeholder="Contraseña" />
+                        <span class="password-toggle" (click)="togglePassword()">
+                            <i [ngClass]="{'fas': true, 'fa-eye': !passwordVisible, 'fa-eye-slash': passwordVisible}" id="togglePassword"></i>
+                        </span>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="#!" class="text-body">¿Has olvidado tu contraseña?</a>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="javascript:void(0)" (click)="toggleResetPassword()" class="text-body">¿Has olvidado tu contraseña?</a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                      <button [disabled]="loginForm.invalid" (click)="login()" type="button" class="btn btn-primary btn-lg"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Ingresar</button>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button [disabled]="loginForm.invalid" (click)="login()" type="button" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Ingresar</button>
-                        </div>
+                </div>
+            </form>
+
+            <form [formGroup]="resetPasswordForm" *ngIf="showResetPassword" class="card shadow-lg p-4">
+                <div class="text-center mb-4">
+                    <h2 class="title">Restablecer contraseña</h2>
+                    <p class="subtitle">Ingresa tu correo electrónico</p>
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/logo.png" alt="Logo Bestgis" class="logo-img">
+                </div>
+                <!-- Email input -->
+                <div class="form-outline mb-4 position-relative">
+                    <i class="fas fa-user icon"></i>
+                    <input formControlName="email" type="email" id="resetEmail"
+                        class="form-control form-control-lg pl-4" placeholder="Correo electrónico" />
+                </div>
+                <div>Se enviará un correo para reiniciar tu contraseña a tu dirección de email. </div>
+                <div class="d-flex justify-content-center">
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                      <button [disabled]="resetPasswordForm.invalid" (click)="resetPassword()" type="button" class="btn btn-primary btn-lg"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Enviar</button>
                     </div>
-                </form>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="javascript:void(0)" (click)="toggleResetPassword()" class="text-body"> Volver al inicio de sesión</a>
+                </div>
+            </form>
+
+            <!-- Mensaje de error -->
+            <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                {{ errorMessage }}
+            </div>
+
+            <!-- Mensaje de éxito -->
+            <div *ngIf="successMessage" class="alert alert-success mt-3">
+                {{ successMessage }}
             </div>
         </div>
     </div>
-    <script src="scripts.js"></script> <!-- Archivo JavaScript para la animación -->
 </body>
 </html>

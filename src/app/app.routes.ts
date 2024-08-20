@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guard/auth.guard';
-import { InicioPageComponent } from './modules/inicio/page/inicio-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: InicioPageComponent
+    loadChildren: () => import("./modules/inicio/inicio.module").then(m => m.InicioModule)
   },
   {
     path: 'auth',
@@ -23,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {} 
+export class AppRoutingModule {}

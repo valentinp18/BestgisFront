@@ -4,12 +4,13 @@ $color-secondary: #041f6b;
 $color-white: #fff;
 $color-gray: #333;
 $color-lightgray: #f8f9fa;
-$color-lightergray: #f2f2f2;
 
 // Estilos generales
 body {
   font-family: 'Arial', sans-serif;
   padding-top: 56px;
+  line-height: 1.6;
+  color: $color-gray;
 }
 
 // Navbar
@@ -52,17 +53,6 @@ body {
   &:hover {
     background-color: darken($color-primary, 10%);
     border-color: darken($color-primary, 10%);
-  }
-}
-
-// Secciones de contenido
-.content-section {
-  padding: 3rem 0;
-  background-color: $color-lightgray;
-  
-  .texto-adicional {
-    font-size: 18px;
-    color: $color-gray;
   }
 }
 
@@ -132,46 +122,58 @@ body {
   }
 }
 
-// Carrusel
-.carousel-section {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  overflow: hidden;
+// Estilos de sección
+.section {
+  padding: 80px 0;
+  margin-bottom: 30px;
 }
 
-.carousel-item {
-  height: 70vh; 
-  min-height: 300px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  text-align: center;
+}
 
-  img {
-    object-fit: cover;
-    object-position: center;
+.section-content {
+  font-size: 1.1rem;
+}
+
+.section-bestgis {
+  background-color: #ecf0f1;
+}
+
+.section-history {
+  background-color: $color-white;
+}
+
+.section-mission-vision {
+  background-color: #ecf0f1;
+  color: $color-white;
+
+  .card {
     height: 100%;
-    width: 100%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
   }
 
-  &:nth-child(2) img {
-    object-position: center 60%; 
-  }
-
-  &:nth-child(3) img {
-    object-position: center 90%; 
+  .section-title {
+    color: #030303;
   }
 }
 
-.carousel-caption {
-  background-color: rgba(0,0,0,0.5);
-  padding: 20px;
-  border-radius: 10px;
+// Efectos adicionales
+.img-fluid {
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 // Media queries para responsividad
@@ -187,16 +189,11 @@ body {
 }
 
 @media (max-width: 768px) {
-  .content-section {
-    .texto-adicional {
-      font-size: 16px;
-    }
+  .section {
+    padding: 50px 0;
   }
-}
-
-@media (max-width: 576px) {
-  .btn-lg {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+  
+  .section-title {
+    font-size: 2rem;
   }
 }

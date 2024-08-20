@@ -183,5 +183,127 @@ export class InformeService {
        ref.where('ultimo_id', '==', parseInt(ultimoId))
     ).valueChanges({ idField: 'id' });
   }
+ 
   
+//DASBOARD
+getEstadisticas(): Observable<any> {
+  return this.getAllInformes().pipe(
+    map(informes => {
+      const total = informes.length;
+      const enProgreso = informes.filter(i => i.estado === 'En progreso').length;
+      const finalizados = informes.filter(i => i.estado === 'Finalizado').length;
+      const exito = informes.filter(i => i.resultado === 'Éxito').length;
+      const inconcluso = informes.filter(i => i.resultado === 'Inconcluso').length;
+      const daño = informes.filter(i => i.resultado === 'Daño').length;
+
+      const cultivosPorFrecuencia = this.contarFrecuencia(informes, 'cultivo');
+      const ubicacionesPorFrecuencia = this.contarFrecuencia(informes, 'ubicacion');
+      const clientesPorFrecuencia = this.contarFrecuencia(informes, 'cliente');
+      const productosPorFrecuencia = this.contarFrecuencia(informes, 'producto');
+      const dronesPorFrecuencia = this.contarFrecuencia(informes, 'drone');
+      const colaboradoresPorFrecuencia = this.contarFrecuencia(informes, 'colaboradorNombre');
+      const tierrasPorFrecuencia = this.contarFrecuencia(informes, 'tierra');
+      const climasPorFrecuencia = this.contarFrecuencia(informes, 'clima');
+      const razonesPorFrecuencia = this.contarFrecuencia(informes, 'razon');
+      const etapasPorFrecuencia = this.contarFrecuencia(informes, 'etapaCultivo');
+
+      const tendenciaTemporal = this.analizarTendenciaTemporal(informes);
+      const efectividadProductos = this.analizarEfectividadProductos(informes);
+      const rendimientoDrones = this.analizarRendimientoDrones(informes);
+      const efectividadColaboradores = this.analizarEfectividadColaboradores(informes);
+      const impactoClimatico = this.analizarImpactoClimatico(informes);
+
+      return {
+        total,
+        enProgreso,
+        finalizados,
+        exito,
+        inconcluso,
+        daño,
+        cultivosPorFrecuencia,
+        ubicacionesPorFrecuencia,
+        clientesPorFrecuencia,
+        productosPorFrecuencia,
+        dronesPorFrecuencia,
+        colaboradoresPorFrecuencia,
+        tierrasPorFrecuencia,
+        climasPorFrecuencia,
+        razonesPorFrecuencia,
+        etapasPorFrecuencia,
+        tendenciaTemporal,
+        efectividadProductos,
+        rendimientoDrones,
+        efectividadColaboradores,
+        impactoClimatico
+      };
+    })
+  );
+}
+
+private contarFrecuencia(informes: Informe[], campo: keyof Informe): {[key: string]: number} {
+  return informes.reduce((acc, informe) => {
+    const valor = informe[campo] as string;
+    acc[valor] = (acc[valor] || 0) + 1;
+    return acc;
+  }, {} as {[key: string]: number});
+}
+
+private analizarTendenciaTemporal(informes: Informe[]): any {
+  const tendencia = informes.reduce((acc, informe) => {
+    const fecha = new Date(informe.fechaSeguimiento).toISOString().split('T')[0];
+    acc[fecha] = (acc[fecha] || 0) + 1;
+    return acc;
+  }, {} as {[key: string]: number});
+
+  return Object.entries(tendencia).sort(([a], [b]) => a.localeCompare(b));
+}
+
+private analizarEfectividadProductos(informes: Informe[]): any {
+  const efectividad = informes.reduce((acc, informe) => {
+    if (!acc[informe.producto]) {
+      acc[informe.producto] = { total: 0, exito: 0 };
+    }
+    acc[informe.producto].total++;
+    if (informe.resultado === 'Éxito') {
+      acc[informe.producto].exito++;
+    }
+    return acc;
+  }, {} as {[key: string]: {total: number, exito: number}});
+
+  return Object.entries(efectividad).map(([producto, stats]) => ({
+    producto,
+    efectividad: (stats.exito / stats.total) * 100
+  }));
+}
+
+private analizarRendimientoDrones(informes: Informe[]): any {
+  return this.analizarEfectividadPorCampo(informes, 'drone');
+}
+
+private analizarEfectividadColaboradores(informes: Informe[]): any {
+  return this.analizarEfectividadPorCampo(informes, 'colaboradorNombre');
+}
+
+private analizarImpactoClimatico(informes: Informe[]): any {
+  return this.analizarEfectividadPorCampo(informes, 'clima');
+}
+
+private analizarEfectividadPorCampo(informes: Informe[], campo: keyof Informe): any {
+  const efectividad = informes.reduce((acc, informe) => {
+    const valor = informe[campo] as string;
+    if (!acc[valor]) {
+      acc[valor] = { total: 0, exito: 0 };
+    }
+    acc[valor].total++;
+    if (informe.resultado === 'Éxito') {
+      acc[valor].exito++;
+    }
+    return acc;
+  }, {} as {[key: string]: {total: number, exito: number}});
+
+  return Object.entries(efectividad).map(([valor, stats]) => ({
+    valor,
+    efectividad: (stats.exito / stats.total) * 100
+  }));
+}
 }

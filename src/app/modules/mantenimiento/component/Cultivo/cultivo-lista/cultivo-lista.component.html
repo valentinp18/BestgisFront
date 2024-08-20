@@ -7,7 +7,6 @@
       <thead class="table-dark">
         <tr>
           <th>Nombre</th>
-          <th class="d-none d-md-table-cell">Tipo</th>
           <th class="d-none d-lg-table-cell">Etapas</th>
           <th class="d-none d-xl-table-cell">Descripción</th>
           <th>Acciones</th>
@@ -16,7 +15,6 @@
       <tbody>
         <tr *ngFor="let cultivo of cultivos">
           <td>{{ cultivo.nombre }}</td>
-          <td class="d-none d-md-table-cell">{{ cultivo.tipo }}</td>
           <td class="d-none d-lg-table-cell">
             <span *ngIf="cultivo.etapas && cultivo.etapas.length > 0">
               {{ cultivo.etapas.join(', ') }}

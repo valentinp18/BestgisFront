@@ -2,9 +2,6 @@
 $color-primary: #06268f;
 $color-secondary: #041f6b; 
 $color-white: #fff;
-$color-gray: #333;
-$color-lightgray: #f8f9fa;
-$color-lightergray: #f2f2f2;
 
 // Estilos generales
 body {
@@ -55,17 +52,6 @@ body {
   }
 }
 
-// Secciones de contenido
-.content-section {
-  padding: 3rem 0;
-  background-color: $color-lightgray;
-  
-  .texto-adicional {
-    font-size: 18px;
-    color: $color-gray;
-  }
-}
-
 // Footer
 .footer {
   background-color: $color-secondary;
@@ -107,7 +93,7 @@ body {
 
 .nav-link {
   position: relative;
-  color: $color-gray;
+  color: #333;
   text-decoration: none;
   font-weight: 500;
   padding: 10px 0;
@@ -132,46 +118,64 @@ body {
   }
 }
 
-// Carrusel
-.carousel-section {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  overflow: hidden;
+// Sección de información de contacto
+.section-contact-info {
+  background-color: #ffffff;
+  padding: 60px 0;
 }
 
-.carousel-item {
-  height: 70vh; 
-  min-height: 300px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
-  img {
-    object-fit: cover;
-    object-position: center;
-    height: 100%;
-    width: 100%;
-  }
-
-  &:nth-child(2) img {
-    object-position: center 60%; 
-  }
-
-  &:nth-child(3) img {
-    object-position: center 90%; 
-  }
-}
-
-.carousel-caption {
-  background-color: rgba(0,0,0,0.5);
-  padding: 20px;
+.contact-card {
+  text-align: center;
+  padding: 30px;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+
+  i {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+}
+
+// Sección CTA
+.section-cta {
+  background-color: #ecf0f1;
+  color: #030303;
+  padding: 80px 0;
+
+  h3 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+}
+
+.btn-success {
+  background-color: #25d366;
+  border-color: #25d366;
+  font-size: 1.2rem;
+  padding: 12px 30px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+    transform: scale(1.05);
+  }
 }
 
 // Media queries para responsividad
@@ -183,20 +187,5 @@ body {
       text-align: center;
       padding: 0.5rem 0;
     }
-  }
-}
-
-@media (max-width: 768px) {
-  .content-section {
-    .texto-adicional {
-      font-size: 16px;
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .btn-lg {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
   }
 }

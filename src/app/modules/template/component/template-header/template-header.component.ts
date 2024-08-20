@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute  } from '@angular/router';
-import { AuthService } from '../../../auth/service/auth.service'; 
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../../auth/service/auth.service';
 import { UsuarioService } from '../../../administracion/service/Usuario.service';
 
 @Component({
@@ -12,12 +12,14 @@ export class TemplateHeaderComponent implements OnInit {
   userName: string = '';
   userPhotoUrl: string | null = null;
   defaultAvatarUrl = 'https://raw.githubusercontent.com/valentinp18/imagenesBest/main/sinfoto.jpg';
+  isDropdownOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
     private usuarioService: UsuarioService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private eRef: ElementRef
   ) {}
 
   ngOnInit() {
@@ -29,8 +31,8 @@ export class TemplateHeaderComponent implements OnInit {
       if (user) {
         this.usuarioService.getUsuarioByUid(user.uid).subscribe(
           userData => {
-            this.userName = userData.nombre || 'Usuario';
-            this.userPhotoUrl = userData.photoURL || null;
+            this.userName = userData?.nombre || userData?.nombre_completo?.split(' ')[0] || 'Usuario';
+            this.userPhotoUrl = userData?.photoURL ?? null;
           },
           error => {
             console.error('Error al cargar datos del usuario:', error);
@@ -42,8 +44,18 @@ export class TemplateHeaderComponent implements OnInit {
     });
   }
 
+  toggleDropdown(event: Event) {
+    event.stopPropagation();
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+  @HostListener('document:click')
+  clickout() {
+    this.isDropdownOpen = false;
+  }
+
   goToProfile() {
     this.router.navigate(['profile'], { relativeTo: this.route });
+    this.isDropdownOpen = false;
   }
 
   confirmLogout() {

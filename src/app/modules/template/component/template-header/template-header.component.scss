@@ -1,13 +1,72 @@
-.user-photo {
-    width: 32px;
-    height: 32px;
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none; 
+    transition: background-color 0.3s ease; 
+    border-radius: 5px; 
+  }
+  
+  .user-info:hover {
+    background-color: rgba(255, 255, 255, 0.1); 
+  }
+  
+  .user-info:active {
+    background-color: rgba(255, 255, 255, 0.2); 
+  }
+  
+  .user-photo {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    object-fit: cover;
-}
-
-.user-name {
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    margin-right: 10px;
+    pointer-events: none; 
+  }
+  
+  .user-name {
+    color: white;
+    pointer-events: none; 
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden; 
+  }
+  
+  .dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdown-content button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .navbar-brand {
+    img {
+      height: 70px; 
+      width: auto; 
+      margin-top: 12px;
+    }
+  }
+  

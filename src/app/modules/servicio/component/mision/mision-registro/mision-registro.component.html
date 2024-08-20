@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2 class="mb-4">{{ id ? 'EDITAR' : 'CREAR' }} MISIÓN</h2>
+  <h2 class="mb-4">{{ id ? 'EDITAR' : 'REGISTRAR' }} DATOS DE LA MISIÓN</h2>
   
   <form (ngSubmit)="onSubmit()" #misionForm="ngForm" *ngIf="!isLoading">
 
@@ -53,7 +53,7 @@
       <label for="ubicacion_id" class="form-label">Ubicación</label>
       <select class="form-select" id="ubicacion_id" name="ubicacion_id" [(ngModel)]="mision.ubicacion_id" required>
         <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion.id">
-          {{ ubicacion.departamento }}, {{ ubicacion.provincia }}, {{ ubicacion.distrito }}, {{ ubicacion.centro_poblado }}
+          {{ ubicacion.departamento }}, {{ ubicacion.provincia }}, {{ ubicacion.distrito }}{{ ubicacion.centro_poblado ? ', ' + ubicacion.centro_poblado : '' }}
         </option>
       </select>
     </div>

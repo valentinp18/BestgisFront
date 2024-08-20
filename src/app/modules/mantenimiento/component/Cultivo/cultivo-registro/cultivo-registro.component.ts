@@ -7,7 +7,6 @@ interface Cultivo {
   nombre: string;
   descripcion: string;
   etapas: string[];
-  tipo: string;
 }
 
 @Component({
@@ -16,7 +15,7 @@ interface Cultivo {
   styleUrls: ['./cultivo-registro.component.scss']
 })
 export class CultivoRegistroComponent implements OnInit {
-  cultivo: Cultivo = { nombre: '', descripcion: '', etapas: [], tipo: '' };
+  cultivo: Cultivo = { nombre: '', descripcion: '', etapas: [] };
   id: string | null = null;
   nuevaEtapa: string = '';
 

@@ -1,208 +1,262 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BestGIS - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./inicio-page.component.scss" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
-            <div class="navbar-text mr-auto">
-                <span class="mr-4"><i class="fas fa-phone-alt mr-1"></i> +51 941 855 144</span>
-                <span><i class="fas fa-envelope mr-1"></i> dgoigochea&#64;bestgispro.com</span>
+            <div class="navbar-text d-none d-lg-flex w-100 justify-content-between align-items-center">
+                <div>
+                    <span class="me-4"><i class="fas fa-phone-alt me-1"></i> +51 941 855 144</span>
+                    <span><i class="fas fa-envelope me-1"></i> dgoigochea&#64;bestgispro.com</span>
+                </div>
+                <div>
+                    <a href="https://www.facebook.com/BestGISPro/?_rdc=1&_rdr" class="text-white me-3" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/bestgis_pro/" class="text-white me-3" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=51941855144&text&type=phone_number&app_absent=0" class="text-white me-3" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/company/bestgis/" class="text-white me-3" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@bestgis8093" class="text-white" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
-            <div class="navbar-text ml-auto">
-                <a href="https://www.facebook.com/BestGISPro/?_rdc=1&_rdr" class="text-white mr-3" target="_blank"><i
-                        class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/bestgis_pro/" class="text-white mr-3" target="_blank"><i
-                        class="fab fa-instagram"></i></a>
-                <a href="https://api.whatsapp.com/send/?phone=51941855144&text&type=phone_number&app_absent=0"
-                    class="text-white mr-3" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.linkedin.com/company/bestgis/" class="text-white mr-3" target="_blank"><i
-                        class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.youtube.com/@bestgis8093" class="text-white mr-3" target="_blank"><i
-                        class="fab fa-youtube"></i></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item">
+                        <span class="nav-link"><i class="fas fa-phone-alt me-1"></i> +51 941 855 144</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link"><i class="fas fa-envelope me-1"></i> dgoigochea&#64;bestgispro.com</span>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.facebook.com/BestGISPro/?_rdc=1&_rdr" class="nav-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.instagram.com/bestgis_pro/" class="nav-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://api.whatsapp.com/send/?phone=51941855144&text&type=phone_number&app_absent=0" class="nav-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.linkedin.com/company/bestgis/" class="nav-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.youtube.com/@bestgis8093" class="nav-link" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Segunda sección -->
     <section class="py-4 second-row">
         <div class="container">
             <div class="row align-items-center">
-                <!-- Logo de la empresa -->
+                <div class="col-md-3 text-center mb-3 mb-md-0">
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/nomlog.png" class="img-fluid company-logo" alt="BestGIS Logo" style="width: 220px;">
+                </div>
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <nav class="custom-nav">
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">AGRICULTURA CON DRONE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/nosotros" routerLinkActive="active">NOSOTROS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/contacto" routerLinkActive="active">CONTACTO</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
                 <div class="col-md-3 text-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/vertical.JPG" class="img-fluid company-logo">
-                </div>
-                <!-- Subtítulos (mantenidos del diseño original) -->
-                <div class="col-md-6 text-center">
-                    <div class="row">
-                        <div class="col subtitles">
-                            AGRICULTURA CON DRONE
-                        </div>
-                        <div class="col subtitles">
-                            NOSOTROS
-                        </div>
-                        <div class="col subtitles">
-                            CONTACTO
-                        </div>
-                    </div>
-                </div>
-                <!-- Botón de inicio de sesión -->
-                <div class="col-md-3 text-center btn-container">
                     <a href="#/auth" class="btn btn-primary btn-iniciar-sesion">Iniciar Sesión</a>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!-- Tercera sección - Portada -->
-    <section class="portada mt-n4">
-        <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/portada.jpg" alt="Portada" class="img-fluid">
+    <section class="carousel-section">
+        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/agras.jpg" class="d-block w-100" alt="Tecnología agrícola">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Cultivando el futuro hoy</h2>
+                        <p>Innovación y precisión para tus cultivos</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/agras2.jpg" class="d-block w-100" alt="Drones en acción">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Drones en acción</h2>
+                        <p>Eficiencia y precisión en cada vuelo</p>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/agras6.jpg" class="d-block w-100" alt="Cultivos saludables">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Cultivos saludables</h2>
+                        <p>Resultados visibles en tus campos</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </section>
-
-    <!-- Cuarta sección - Contenido adicional -->
-    <section class="py-4 fourth-row">
+    
+    <section class="py-5 content-section">
         <div class="container">
-            <div class="row">
-                <!-- Columna de la imagen -->
-                <div class="col-md-6">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/personal.JPG" alt="Imagen" class="img-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/personal.JPG" alt="Imagen" class="img-fluid rounded shadow">
                 </div>
-                <!-- Columna del texto -->
-                <div class="col-md-6">
-                    <div class="d-flex flex-column justify-content-center h-100"><p class="texto-adicional text-center">Equipado con un sistema de pulverización de atomización dual, 
-                        mapeo inteligente del terreno, un radar de matriz en fase activa y un sistema de percepción visual binocular, integra seguridad de vuelo con reconocimiento 
-                        aéreo, facilitando la fumigación con precisión en tus cultivos.</p></div>
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Tecnología de punta en agricultura</h2>
+                    <p class="texto-adicional">Equipado con un sistema de pulverización de atomización dual, mapeo inteligente del terreno, un radar de matriz en fase activa y un sistema de percepción visual binocular, integra seguridad de vuelo con reconocimiento aéreo, facilitando la fumigación con precisión en tus cultivos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-5 content-section" style="background-color: #f2f2f2;">
+        <div class="container">
+            <h2 class="text-center mb-5">Características principales</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Drone.png" alt="Drone" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Gran capacidad</h5>
+                            <p class="card-text">Carga de espacio (sólidos) de 50 Kg. Y sistema de rociado atomizado (líquidos) 40 L.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Ahorro.png" alt="Ahorro" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Eficiencia</h5>
+                            <p class="card-text">Ahorra en agroquímicos, agua y tiempo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/agua.png" alt="Agua" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Versatilidad</h5>
+                            <p class="card-text">Admite rociado/esparcido de vuelo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Seguro.png" alt="Seguro" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Seguridad</h5>
+                            <p class="card-text">Llega a áreas difíciles o reemplaza directamente el trabajo humano en tareas peligrosas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Radar.png" alt="Radar" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Radar avanzado</h5>
+                            <p class="card-text">Radar de matriz en fase activa para una navegación precisa</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Eficiente.png" alt="Eficiente" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Precisión</h5>
+                            <p class="card-text">Aplicación precisa de productos, sin desperdicios.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Proteccion.png" alt="Protección" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Resistente</h5>
+                            <p class="card-text">Protección contra agua y polvo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Amigable.png" alt="Amigable" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h5 class="card-title">Ecológico</h5>
+                            <p class="card-text">Es amigable con el medio ambiente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-5 content-section" style="background-color: #e0e0e0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0 order-lg-1 order-2 text-center text-lg-start">
+                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/dro11.png" class="img-fluid rounded mx-auto d-block d-lg-inline-block" alt="DJI Agras T40" style="max-width: 300px;">
+                </div>
+                <div class="col-lg-6 order-lg-2 order-1">
+                    <h2 class="mb-4">DJI Agras T40</h2>
+                    <p class="texto-adicional">DJI Agras T40 es ampliamente considerado como el mejor drone agrícola del mundo debido a su impresionante capacidad de carga, precisión en la aplicación y facilidad de uso. Con su tanque de 40 litros para aspersión y tanque de 50 litros para dispersión de semillas o fertilizantes sólidos, la solución completa y confiable para mejorar sus operaciones y optimizar los resultados en sus cultivos.</p>
                 </div>
             </div>
         </div>
     </section>
 
-<!-- Quinta sección - Iconos con texto -->
-<section class="py-2 fifth-row" style="background-color: #f2f2f2;">
-    <div class="container">
-        <div class="row my-4">
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Drone.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Carga de espacio (sólidos) de 50 Kg. Y sistema de rociado atomizado (líquidos) 40 L.</p>
+    <footer class="py-4 footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <hr class="bg-white">
+                </div>
+                <div class="col-md-4 text-center social-icons">
+                    <a href="https://www.facebook.com/BestGISPro/?_rdc=1&_rdr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/bestgis_pro/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=51941855144&text&type=phone_number&app_absent=0" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/company/bestgis/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@bestgis8093" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="col-md-4">
+                    <hr class="bg-white">
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Ahorro.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Ahorra en agroquímicos, agua y tiempo.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row my-4">
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/agua.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Admite rociado/esparcido de vuelo</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Seguro.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Llega a áreas difíciles o reemplaza directamente el trabajo humano en tareas peligrosas</p>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="mb-0">Copyright © 2024 BESTGIS</p>
                 </div>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Radar.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Radar de matriz en fase activa</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Eficiente.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Aplicación precisa de productos, sin desperdicios.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row my-4">
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Proteccion.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Protección agua y polvo</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-center">
-                    <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/Amigable.png" class="img-fluid mr-3" style="max-width: 50px;">
-                    <p class="text-left mb-0">Es amigable con el medio ambiente.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Sexta sección - Imagen con texto -->
-<section class="py-4 sixth-row">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Columna de la imagen -->
-            <div class="col-md-6">
-                <img src="https://raw.githubusercontent.com/valentinp18/imagenesBest/main/drone2.png" class="img-fluid" alt="Imagen" style="max-width: 300px;">
-            </div>
-            <!-- Columna del texto -->
-            <div class="col-md-6">
-                <p class="texto-adicional text-center">DJI Agras T40 es ampliamente considerado como el mejor drone agrícola del mundo debido a su impresionante capacidad de carga, precisión en la aplicación y facilidad de uso. Con su tanque de 40 litros para aspersión y tanque de 50 litros para dispersión de semillas o fertilizantes sólidos, la solución completa y confiable para mejorar sus operaciones y optimizar los resultados en sus cultivos.</p>
-            </div>
-        </div>
-        <!-- Líneas de texto adicionales -->
-        <div class="row mt-3">
-            <div class="col-md-12 text-center">
-                <p class="text-primary font-weight-bold mb-1" style="font-size: 24px;">Maximiza la producción de tus cultivos</p>
-                <p class="text-primary mb-3" style="font-size: 28px;">Cotiza el servicio de fumigación y fertilización</p>
-            </div>
-        </div>
-        <!-- Botón de cotización -->
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center">
-            <a href="https://api.whatsapp.com/send/?phone=%2B51941855144&text&type=phone_number&app_absent=0" class="btn btn-success btn-cotizar btn-lg" target="_blank"><i class="fab fa-whatsapp mr-2"></i>COTIZAR AHORA</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Séptima sección - Pie de página -->
-<section class="py-4 seventh-row" style="background-color: #041f6b; color: #fff;">
-    <div class="container">
-        <div class="row">
-            <!-- Línea blanca izquierda -->
-            <div class="col-md-4 text-right">
-                <hr style="border-top: 1px solid #fff;">
-            </div>
-            <!-- Columna de los íconos de redes sociales -->
-            <div class="col-md-4 text-center">
-                <a href="https://www.facebook.com/BestGISPro/?_rdc=1&_rdr" class="text-white mr-3" target="_blank"><i class="fab fa-facebook-f fa-lg"></i></a>
-                <a href="https://www.instagram.com/bestgis_pro/" class="text-white mr-3" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
-                <a href="https://api.whatsapp.com/send/?phone=51941855144&text&type=phone_number&app_absent=0" class="text-white mr-3" target="_blank"><i class="fab fa-whatsapp fa-lg"></i></a>
-                <a href="https://www.linkedin.com/company/bestgis/" class="text-white mr-3" target="_blank"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                <a href="https://www.youtube.com/@bestgis8093" class="text-white mr-3" target="_blank"><i class="fab fa-youtube fa-lg"></i></a>
-            </div>
-            <!-- Línea blanca derecha -->
-            <div class="col-md-4">
-                <hr style="border-top: 1px solid #fff;">
-            </div>
-        </div>
-        <!-- Texto adicional -->
-        <div class="row mt-3">
-            <div class="col-md-12 text-center">
-                <p class="mb-0" style="font-size: 18px;">Copyright © 2024 BESTGIS</p>
-            </div>
-        </div>
-    </div>
-</section>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

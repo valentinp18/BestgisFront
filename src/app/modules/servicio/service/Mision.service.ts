@@ -27,11 +27,14 @@ interface Mision {
 interface Cultivo {
   id?: string;
   nombre: string;
-  tipo: string;
-  etapas: string[];
+  tipos: {
+    [key: string]: {
+      tipo: string;
+      etapas: string[];
+    };
+  };
   descripcion: string;
 }
-
 interface Ubicacion {
   departamento: string;
   provincia: string;
@@ -120,7 +123,7 @@ export class MisionService {
                 map(({ colaboradorPersona, clientePersona }) => ({
                   ...mision,
                   cultivo_nombre: cultivo.data()?.nombre,
-                  cultivo_etapas: cultivo.data()?.etapas,
+                  cultivo_tipo: cultivo.data()?.tipos || '',
                   ubicacion_info: ubicacion.data() ? {
                     departamento: ubicacion.data()?.departamento || '',
                     provincia: ubicacion.data()?.provincia || '',
@@ -227,7 +230,7 @@ export class MisionService {
       map(({ mision, cultivo, ubicacion, producto, drone, colaborador, tierra, clima }) => ({
         ...mision,
         cultivo_nombre: cultivo.data()?.nombre,
-        cultivo_etapas: cultivo.data()?.etapas,
+        cultivo_tipo: cultivo.data()?.tipos || '',
         ubicacion_info: ubicacion.data() ? {
           departamento: ubicacion.data()?.departamento || '',
           provincia: ubicacion.data()?.provincia || '',

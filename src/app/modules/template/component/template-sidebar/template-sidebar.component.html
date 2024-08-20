@@ -1,10 +1,10 @@
 <div class="nav menu-container">
-    <div class="sb-sidenav-menu-heading" style="color: white;">Core</div>
-    <a class="nav-link" href="#" style="color: white;">
-      <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-      Pagina principal
-    </a>
-    <div class="sb-sidenav-menu-heading" style="color: white;">Interface</div>
+  <div class="sb-sidenav-menu-heading" style="color: white;">Dashboard</div>
+  <a class="nav-link" [routerLink]="['./home']" routerLinkActive="active" style="color: white;">
+    <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+    Inicio
+  </a>
+    <div class="sb-sidenav-menu-heading" style="color: white;">Panel Principal</div>
     <div *ngFor="let d of menu">
       <a class="nav-link" href="#" (click)="toggleMenu(d.target); $event.preventDefault()"
         [class.collapsed]="!isMenuActive(d.target)"

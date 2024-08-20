@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioPageComponent } from './page/inicio-page.component';
+import { NosotrosPageComponent } from './nosotros/nosotros-page.component';
+import { ContactoPageComponent } from './contacto/contacto-page.component';
 
 const routes: Routes = [
   {
@@ -8,8 +10,12 @@ const routes: Routes = [
     component: InicioPageComponent
   },
   {
-    path: 'auth', 
-    loadChildren: () => import("../auth/auth.module").then(m => m.AuthModule)
+    path: 'nosotros',
+    component: NosotrosPageComponent
+  },
+  {
+    path: 'contacto',
+    component: ContactoPageComponent
   }
 ];
 

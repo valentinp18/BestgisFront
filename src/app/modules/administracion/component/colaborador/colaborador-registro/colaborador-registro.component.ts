@@ -44,6 +44,11 @@ export class ColaboradorRegistroComponent implements OnInit {
         if (this.colaborador.fecha_nacimiento) {
           this.colaborador.fecha_nacimiento = this.convertirFechaParaInput(this.colaborador.fecha_nacimiento);
         }
+        if (this.colaborador.rol) {
+          console.log('Rol cargado:', this.colaborador.rol);
+        } else {
+          console.log('El colaborador no tiene un rol asignado');
+        }
         this.isLoading = false;
       },
       error => {
@@ -57,7 +62,6 @@ export class ColaboradorRegistroComponent implements OnInit {
     if (this.colaborador.fecha_nacimiento) {
       this.colaborador.fecha_nacimiento = this.convertirFechaParaFirestore(this.colaborador.fecha_nacimiento);
     }
-
     if (this.id) {
       this.colaboradorService.updateColaborador(this.id, this.colaborador)
         .then(() => {

@@ -20,10 +20,4 @@ export class UsuarioListaComponent implements OnInit {
       this.usuarios = data;
     });
   }
-
-  deleteUsuario(id: string): void {
-    this.usuarioService.deleteUsuario(id)
-      .then(() => console.log('Usuario eliminado'))
-      .catch(err => console.log(err));
-  }
 }

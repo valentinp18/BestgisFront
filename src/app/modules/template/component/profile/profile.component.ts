@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/service/auth.service';
 import { UsuarioService } from '../../../administracion/service/Usuario.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of , map} from 'rxjs';
 import { switchMap, catchError, tap } from 'rxjs/operators';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -32,6 +31,16 @@ export class ProfileComponent implements OnInit {
       switchMap(user => {
         if (user) {
           return this.usuarioService.getUsuarioByUid(user.uid).pipe(
+            map(usuario => {
+              if (usuario) {
+                return {
+                  ...usuario,
+                  nombre: usuario.nombre || usuario.nombre_completo?.split(' ')[0] || 'N/A',
+                  apellido: usuario.apellido || usuario.nombre_completo?.split(' ').slice(1).join(' ') || 'N/A'
+                };
+              }
+              return null;
+            }),
             catchError(error => {
               console.error('Error al obtener datos del usuario:', error);
               this.error = 'Error al cargar los datos del perfil';
@@ -60,7 +69,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  updatePhoto(event: any) {
+  uploadProfileImage(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.authService.getCurrentUser().subscribe(user => {
@@ -77,7 +86,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  deletePhoto() {
+  deleteProfileImage() {
     if (confirm('¿Estás seguro de que quieres eliminar tu foto de perfil?')) {
       this.authService.getCurrentUser().subscribe(user => {
         if (user) {
